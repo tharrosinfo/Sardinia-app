@@ -1,42 +1,37 @@
 <!-- index.html -->
     <!DOCTYPE html>	 
 	<!-- define angular app -->
-    <html ng-app="scotchApp">
+    <html ng-app="TharrosApp">
     <head>
-	  <script src="phonegap.js"></script>
+	  
       <!-- SCROLLS -->
       <!-- load bootstrap and fontawesome -->
       <link rel="stylesheet" href="css/bootstrap.min.css" />
       <link rel="stylesheet" href="css/font-awesome.css" /> 
+	  <link rel="stylesheet" href="css/style.css" />
 
-      <!-- SPELLS -->
-      <!-- load angular and angular route -->
-      <script src="js/angular.min.js"></script>
-      <script src="js/angular-route.min.js"></script> 
-	  <script src="js/ui-bootstrap-tpls-0.13.4.min.js"></script> 
-      <script src="js/script.js"></script>
+      
     </head>
-    <body ng-controller="mainController">
+    <body ng-controller="indexController">
 
         <!-- HEADER AND NAVBAR -->
         <header>
             <nav class="navbar navbar-default">
-            <div class="container-fluid" ng-controller="CollapseCtrl">
+            <div class="container-fluid">
 				<div class="navbar-header">	
-					<a class="navbar-brand" href="" ng-click="isCollapsed = !isCollapsed"><i class="fa fa-list"></i></a>
-					<a class="navbar-brand" href="/">Angular Routing Example</a>
+					<a class="navbar-brand" href="" ng-click="showLeft($event)"><i class="fa fa-list"></i></a>
+					<a class="navbar-brand" href="#/">Tharros.info Sardegna</a>
 				</div>
-				<div collapse="isCollapsed">
-                <ul class="nav navbar-nav navbar-right">
-					<li><a href="#/"><i class="fa fa-home"></i> Home</a></li>
-                    <li><a href="#about"><i class="fa fa-shield"></i> About</a></li>
-                    <li><a href="#contact"><i class="fa fa-comment"></i> Contact</a></li>
-					
-                </ul>
-				</div>
-            </div>
+			</div>
             </nav>
         </header>
+		
+		<menu visible="leftVisible" alignment="left">
+    		<menu-item hash="#/"><i class="fa fa-home"></i> Home</menu-item>
+    		<menu-item hash="#about"><i class="fa fa-shield"></i> About</menu-item>
+   	 		<menu-item hash="#contact"><i class="fa fa-comment"></i> Contact</a></menu-item>
+		</menu>
+		
 
         <!-- MAIN CONTENT AND INJECTED VIEWS -->
         <div id="main">
@@ -44,6 +39,15 @@
             <!-- this is where content will be injected -->
 			<div ng-view></div>
         </div>
+		
+		
+	<!-- SPELLS -->
+	<script src="phonegap.js"></script>
+    <!-- load angular and angular route -->
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-route.min.js"></script> 
+	<script src="js/ui-bootstrap-tpls-0.13.4.min.js"></script> 
+    <script src="js/script.js"></script>
 
     </body>
     </html>

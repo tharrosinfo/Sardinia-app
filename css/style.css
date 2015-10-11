@@ -1,0 +1,79 @@
+
+
+.navbar-default {background-color: #213E69}
+.navbar-brand {color: #fff !important} 
+
+/* left menu */
+.border-box {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+menu {
+  display: block;
+}
+menu > div {
+  position: absolute;
+  z-index: 9999;
+  top: 0;
+  width: 250px;
+  height: 100%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-transition: -webkit-transform ease 250ms;
+  -moz-transition: -webkit-transform ease 250ms;
+  -ms-transition: -webkit-transform ease 250ms;
+  -o-transition: -webkit-transform ease 250ms;
+  transition: -webkit-transform ease 250ms;
+  -webkit-transition: transform ease 250ms;
+  -moz-transition: transform ease 250ms;
+  -ms-transition: transform ease 250ms;
+  -o-transition: transform ease 250ms;
+  transition: transform ease 250ms;
+}
+menu > div.left {
+  background: #fff;
+  left: -250px;
+}
+menu > div.show.left {
+  transform: translate3d(250px, 0, 0);
+  -ms-transform: translate3d(250px, 0, 0);
+  -webkit-transform: translate3d(250px, 0, 0);
+  -o-transform: translate3d(250px, 0, 0);
+  -moz-transform: translate3d(250px, 0, 0);
+}
+menu > div.right {
+  background: #fff;
+  right: -250px;
+}
+menu > div.show.right {
+  transform: translate3d(-250px, 0, 0);
+  -ms-transform: translate3d(-250px, 0, 0);
+  -webkit-transform: translate3d(-250px, 0, 0);
+  -o-transform: translate3d(-250px, 0, 0);
+  -moz-transform: translate3d(-250px, 0, 0);
+}
+menu > div > menu-item {
+  display: block;
+}
+menu > div > menu-item > div {
+  /*float: left;*/
+  width: 100%;
+  margin: 0;
+  padding: 15px 30px;
+  border-bottom: solid 1px #555;
+  cursor: pointer;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  color: #232323;
+  font-weight: bold;
+}
+menu > div > menu-item > div:hover {
+  color: #232323;
+  
+}
+menu > div > menu-item > div > span {
+  float: right;
+  color: inherit;
+  padding-right: 4.0em;
+}
+

@@ -1,6 +1,13 @@
 <!-- home.html -->
     <div class="jumbotron text-center">
-        <h1>Home Page</h1>
+        <h1>Sites and Museums</h1>
 
         <p>{{ message }}</p>
+		
+		<ul>
+			<li ng-repeat="phone in phones">
+				<span>{{phone.name}}</span>
+		     	<p>{{phone.snippet}}</p>
+		    </li>
+		</ul>
     </div>
