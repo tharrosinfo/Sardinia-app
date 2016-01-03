@@ -26,18 +26,17 @@
             });
     });
 	
-    // create the controller and inject Angular's $scope
-    TharrosApp.controller('mainController', function($scope) {
-        // create a message to display in our view
-        $scope.message = 'Everyone come and see how good I look!';
-		$scope.phones = [
-		    {'name': 'Nexus S',
-		     'snippet': 'Fast just got faster with Nexus S.'},
-		    {'name': 'Motorola XOOM™ with Wi-Fi',
-		     'snippet': 'The Next, Next Generation tablet.'},
-		    {'name': 'MOTOROLA XOOM™',
-		     'snippet': 'The Next, Next Generation tablet.'}
-		 ];
+	// create the controller and inject Angular's $scope
+    TharrosApp.controller('mainController', function($scope, MyItems) {
+        // Get all the documents
+		$scope.sites = [];
+		MyItems.addSample().then(function(message){
+			$scope.message = "Updated";
+		});
+		MyItems.all().then(function(sites){
+			$scope.sites = sites;
+			$scope.message = "Update list";
+		});
     });
 
     TharrosApp.controller('aboutController', function($scope) {
@@ -75,6 +74,9 @@
 	            $scope.close(); 
 	        });
 	    }
+		
+		
+		
 	});
 	
 	TharrosApp.run(function($rootScope) {
@@ -86,6 +88,10 @@
 	    document.addEventListener("click", function(e) {
 	        $rootScope.$broadcast("documentClicked", e.target);
 	    });
+	});
+	
+	TharrosApp.run(function(db) {
+		db.init();
 	});
 	
 	TharrosApp.directive("menu", function() {
@@ -115,3 +121,8 @@
 	         }
 	     }
 	});
+	
+	
+	
+	
+   
