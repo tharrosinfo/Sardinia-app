@@ -1,13 +1,14 @@
 <!-- home.html -->
-    <div class="jumbotron text-center">
+    <div class="text-center">
         <h1>Sites and Museums</h1>
 
         <p>{{ message }}</p>
 		
-		<ul>
-			<li ng-repeat="phone in phones">
-				<span>{{phone.name}}</span>
-		     	<p>{{phone.snippet}}</p>
+		<ul class="mainlist">
+			<li ng-repeat="site in sites">
+				<img src={{"images/"+site.image}}>
+				<h3>{{site.name}}</h3>
+		     	<p>{{site.place}} ({{site.province}})</p>
 		    </li>
 		</ul>
     </div>
