@@ -12,7 +12,12 @@
                 templateUrl : 'pages/home.html',
                 controller  : 'mainController'
             })
-
+			
+			// route for the sites details page
+			.when('/:id', {
+				templateUrl : 'pages/sites-detail.html',
+                controller  : 'detailController'
+			})
             // route for the about page
             .when('/about', {
                 templateUrl : 'pages/about.html',
@@ -27,15 +32,29 @@
     });
 	
 	// create the controller and inject Angular's $scope
-    TharrosApp.controller('mainController', function($scope, MyItems) {
-        // Get all the documents
+    TharrosApp.controller('mainController', function($scope, $http, MyItems) {
+		//var mydate = new Date();
+		//var noCache = mydate.getTime();
+		//$http.get('data/sites.json?'+noCache).success(function(data) {
+		//	$scope.sites = data;
+		//	MyItems.insert($scope.sites).then(function(message){
+		//		$scope.message = "Updated";
+		//	});
+			MyItems.all().then(function(sites){
+				$scope.sites = sites;
+				$scope.message = "Retrieved list";
+			});
+		//});
+		
+		
+    });
+	
+	TharrosApp.controller('detailController', function($scope, MyItems, $routeParams) {
+        $scope.message = 'This is just a demo.';
 		$scope.sites = [];
-		MyItems.addSample().then(function(message){
-			$scope.message = "Updated";
-		});
-		MyItems.all().then(function(sites){
+		MyItems.getById($routeParams.id).then(function(sites){
 			$scope.sites = sites;
-			$scope.message = "Update list";
+			$scope.message = "Retrieved details";
 		});
     });
 
@@ -79,6 +98,7 @@
 		
 	});
 	
+		
 	TharrosApp.run(function($rootScope) {
 	    document.addEventListener("keyup", function(e) {
 	        if (e.keyCode === 27)
