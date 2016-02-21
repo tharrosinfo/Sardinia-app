@@ -15,7 +15,7 @@
 					{name: 'id', type: 'integer primary key'},
 					{name: 'category', type: 'varchar(50)'},
 					{name: 'image', type: 'varchar(50)'},
-					{name: 'place', type: 'varchar(50)'}, 
+					{name: 'place', type: 'varchar(150)'}, 
 					{name: 'province', type: 'varchar(2)'},
 					{name: 'name', type: 'varchar(50)'},
 					{name: 'coordGlng', type: 'float(8,5)'},
@@ -38,9 +38,9 @@
 	            angular.forEach(table.columns, function(column) {
 	                columns.push(column.name + ' ' + column.type);
 	            });
-					var querytemp = 'DROP TABLE ' + table.name ;
-					self.query(querytemp);
-					console.log('Table ' + table.name + ' deleted');
+					//var querytemp = 'DROP TABLE ' + table.name ;
+					//self.query(querytemp);
+					//console.log('Table ' + table.name + ' deleted');
 				var query = 'CREATE TABLE IF NOT EXISTS ' + table.name + ' (' + columns.join(',') + ')';
 	            self.query(query);
 	            console.log('Table ' + table.name + ' initialized');
@@ -105,6 +105,18 @@
 	            console.log('INSERT success');
 				return db.fetchAll(result);
 	        });
+		};
+		
+		self.insert = function(sites){
+			var sql = "INSERT OR REPLACE INTO sites " +
+		            "(id,category,image,place,province,name,coordGlng,coordGlat) " +
+		            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+			var l = sites.length;
+			for (var i = 0; i < l; i++) {
+				e = sites[i];
+				db.query(sql, [e.id, e.category, e.image, e.place, e.province, e.name, e.coordGlng, e.coordGlat])
+			};
+			return self.all();
 		};
 	    
 	    return self;

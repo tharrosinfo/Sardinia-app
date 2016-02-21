@@ -7,7 +7,7 @@
 		<ul class="mainlist">
 			<li ng-repeat="site in sites">
 				<img src={{"images/"+site.image}}>
-				<h3>{{site.name}}</h3>
+				<h3><a href="#/{{site.id}}">{{site.name}}</a></h3>
 		     	<p>{{site.place}} ({{site.province}})</p>
 		    </li>
 		</ul>
