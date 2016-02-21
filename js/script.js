@@ -33,18 +33,18 @@
 	
 	// create the controller and inject Angular's $scope
     TharrosApp.controller('mainController', function($scope, $http, MyItems) {
-		//var mydate = new Date();
-		//var noCache = mydate.getTime();
-		//$http.get('data/sites.json?'+noCache).success(function(data) {
-		//	$scope.sites = data;
-		//	MyItems.insert($scope.sites).then(function(message){
-		//		$scope.message = "Updated";
-		//	});
-			MyItems.all().then(function(sites){
-				$scope.sites = sites;
-				$scope.message = "Retrieved list";
+		var mydate = new Date();
+		var noCache = mydate.getTime();
+		$http.get('data/sites.json?'+noCache).success(function(data) {
+			$scope.sites = data;
+			MyItems.insert($scope.sites).then(function(message){
+				$scope.message = "Updated";
 			});
-		//});
+		//	MyItems.all().then(function(sites){
+		//		$scope.sites = sites;
+		//		$scope.message = "Retrieved list";
+		//	});
+		});
 		
 		
     });

@@ -38,9 +38,9 @@
 	            angular.forEach(table.columns, function(column) {
 	                columns.push(column.name + ' ' + column.type);
 	            });
-					//var querytemp = 'DROP TABLE ' + table.name ;
-					//self.query(querytemp);
-					//console.log('Table ' + table.name + ' deleted');
+					var querytemp = 'DROP TABLE ' + table.name ;
+					self.query(querytemp);
+					console.log('Table ' + table.name + ' deleted');
 				var query = 'CREATE TABLE IF NOT EXISTS ' + table.name + ' (' + columns.join(',') + ')';
 	            self.query(query);
 	            console.log('Table ' + table.name + ' initialized');
