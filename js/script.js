@@ -49,11 +49,12 @@
 		
     });
 	
-	TharrosApp.controller('detailController', function($scope, MyItems, $routeParams) {
+	TharrosApp.controller('detailController', function($sce,$scope, MyItems, $routeParams) {
         $scope.message = 'This is just a demo.';
 		$scope.sites = [];
 		MyItems.getById($routeParams.id).then(function(sites){
 			$scope.sites = sites;
+			$scope.infohtml = $sce.trustAsHtml(sites.info) ;//$scope.sites.info;
 			$scope.message = "Retrieved details";
 		});
     });

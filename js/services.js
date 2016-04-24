@@ -2,24 +2,25 @@
 		name: 'sardinia_db',
 		tables: [
 			{
-				name: 'descriptions',
+				name: 'categories',
 				columns: [
-					{name: 'id', type: 'integer primary key'},
-					{name: 'description', type: 'longtext'},
-					{name: 'lastupdate', type: 'timestamp'}
+					{name: 'cat', type: 'varchar(1) primary key'},
+					{name: 'type', type: 'varchar(50)'}
 				]
 			},
 			{
 				name: 'sites',
 				columns: [
 					{name: 'id', type: 'integer primary key'},
-					{name: 'category', type: 'varchar(50)'},
+					{name: 'cat', type: 'varchar(1)'},
 					{name: 'image', type: 'varchar(50)'},
 					{name: 'place', type: 'varchar(150)'}, 
-					{name: 'province', type: 'varchar(2)'},
+					{name: 'prov', type: 'varchar(2)'},
 					{name: 'name', type: 'varchar(50)'},
 					{name: 'coordGlng', type: 'float(8,5)'},
 					{name: 'coordGlat', type: 'float(8,5)'},
+					{name: 'description', type: 'longtext'},
+					{name: 'info', type: 'longtext'}
 				]
 			}
 		]
@@ -96,25 +97,15 @@
 	        });
 	    };
 		
-		self.addSample = function(){
-			var sql = "INSERT OR REPLACE INTO sites " +
-		            "(id,category,image,place,province,name,coordGlng,coordGlat) " +
-		            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-			return db.query(sql, [100,'P','Tharros001.jpg','Cabras','OR','Tharros',8.000,39.000])
-	        .then(function(result){
-	            console.log('INSERT success');
-				return db.fetchAll(result);
-	        });
-		};
-		
 		self.insert = function(sites){
 			var sql = "INSERT OR REPLACE INTO sites " +
-		            "(id,category,image,place,province,name,coordGlng,coordGlat) " +
-		            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		            "(id,cat,image,place,prov,name,coordGlng,coordGlat,description,info) " +
+		            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			var l = sites.length;
 			for (var i = 0; i < l; i++) {
 				e = sites[i];
-				db.query(sql, [e.id, e.category, e.image, e.place, e.province, e.name, e.coordGlng, e.coordGlat])
+				db.query(sql, [e.id, e.cat, e.image, e.place, e.prov, e.name, e.coordGlng, e.coordGlat,e.description,e.info])
+				console.log(e.id + ' initialized');
 			};
 			return self.all();
 		};
