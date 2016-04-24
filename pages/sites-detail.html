@@ -3,12 +3,14 @@
         <h1>Sites and Museums</h1>
 
         <p>{{ message }}</p>
-		
 		<ul class="mainlist">
 			<li>
 				<img src={{"images/"+sites.image}}>
 				<h3>{{sites.name}}</h3>
-		     	<p>{{sites.place}} ({{sites.province}})</p>
+				<p>{{sites.place}} ({{sites.prov}})</p>
+				<p>{{sites.cat}} </p>
+				<p>{{sites.description}} </p>
+				<p ng-bind-html="infohtml"></p>
 		    </li>
 		</ul>
     </div>
