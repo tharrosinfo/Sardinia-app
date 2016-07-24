@@ -1,16 +1,16 @@
 <!-- home.html -->
     <div class="text-center">
-        <h1>Sites and Museums</h1>
+        <h1>Bezienswaardigheden en evenementen</h1>
 
         <p>{{ message }}</p>
 		
 		<ul class="mainlist">
 			<li ng-repeat="site in sites">
 				<img src={{"images/"+site.image}}>
-				<h2><a href="#/{{site.id}}">{{site.name}}</a></h2>
+				<h2><a href="#/detail/{{site.id}}">{{site.name}}</a></h2>
 				<p>{{site.place}} ({{site.prov}})</p>
 				<p>{{site.cat}} </p>
-				<p>{{site.description}} </p>
-		    </li>
+				<p>{{ distance(site.distance_acos) }} km</p>
+			</li>
 		</ul>
     </div>
