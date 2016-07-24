@@ -1,16 +1,16 @@
-<!-- home.html -->
+<!-- sites-detail.html -->
     <div class="text-center">
-        <h1>Sites and Museums</h1>
+        <h1>{{sites.name}}</h1>
 
         <p>{{ message }}</p>
 		<ul class="mainlist">
 			<li>
 				<img src={{"images/"+sites.image}}>
-				<h3>{{sites.name}}</h3>
+				<h2>{{sites.name}}</h2>
 				<p>{{sites.place}} ({{sites.prov}})</p>
-				<p>{{sites.cat}} </p>
-				<p>{{sites.description}} </p>
-				<p ng-bind-html="infohtml"></p>
+				<p>{{sites.cat}}</p>
+				<p class="toleft textbox">{{sites.description}} </p>
+				<p class="toleft infobox" ng-bind-html="infohtml"></p>
 		    </li>
 		</ul>
     </div>
