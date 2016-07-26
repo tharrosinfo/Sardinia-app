@@ -96,12 +96,21 @@
 		});
 	});
 	
-	TharrosApp.controller('detailController', function($sce,$scope, MyItems, $routeParams) {
-        $scope.sites = [];
-		MyItems.getById($routeParams.id).then(function(sites){
-			$scope.sites = sites;
-			$scope.infohtml = $sce.trustAsHtml(sites.info) ;
-			$scope.message = "Informatie";
+	TharrosApp.controller('detailController', function($geolocation,$sce,$scope, MyItems, $routeParams) {
+		$geolocation.getCurrentPosition({
+			timeout: 60000
+		}).then(function(position) {
+			$scope.coords = position.coords;
+			$scope.mylat = $scope.coords.latitude;
+			$scope.mylon = $scope.coords.longitude;
+			console.log("My coords "+ $scope.mylat + " , " + $scope.mylon);
+			$scope.sites = [];
+			MyItems.getById($routeParams.id).then(function(sites){
+				$scope.sites = sites;
+				$scope.infohtml = $sce.trustAsHtml(sites.info) ;
+				//$scope.distance = function(distacos) { return (Math.acos(distacos) * 6371).toFixed(2)} ;
+				$scope.message = "Informatie";
+			});
 		});
     });
 

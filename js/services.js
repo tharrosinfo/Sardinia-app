@@ -25,6 +25,7 @@
 				columns: [
 					{name: 'id', type: 'integer primary key'},
 					{name: 'lastupdate', type: 'datetime'},
+					{name: 'lastcheck', type: 'datetime'},
 					{name: 'version', type: 'varchar(10)'}
 				]
 			}
@@ -125,68 +126,83 @@
 	    };
 		
 		self.checkstate = function($http,$filter,$confirm) {
-			return db.query('SELECT lastupdate FROM mystate WHERE id=1')
+			return db.query('SELECT lastupdate,lastcheck FROM mystate WHERE id=1')
 	        .then(function(result){
-				e = JSON.stringify(result, null, 4);
+				//e = JSON.stringify(result, null, 4);
 				console.log('Result rows lenght :'+result.rows.length);
 				if(result.rows.length > 0){
 					curstate = db.fetch(result);
-					
+					runupdate = false;
+					var lastcheckdate = new Date(curstate.lastcheck) ;
+					var newcheckdate = new Date();
+					lastcheckdate.setDate(lastcheckdate.getDate() + 1)
+					if (lastcheckdate.getTime() < newcheckdate.getTime()){ runupdate = true;}
+					console.log('next update time: ' + lastcheckdate + ' current check time: ' + newcheckdate);
 				}else{				
 					console.log('empty result');
 					curstate = '' ;
+					runupdate = true;
 				}
-				return $http({
-					method: 'POST',
-					crossDomain: true,
-					dataType: "json",
-					data: { reg: "xN4p!t92Zy", app: 2, state: curstate.lastupdate},
-					url: 'http://www.tharros.info/checkapp.php'
-				}).then(function successCallback(response) {
-					// this callback will be called asynchronously
-					//e = JSON.stringify(response, null, 4)
-					console.log("success check " + response.data[0].update);
-					if (response.data[0].update === 0){
-						// ask user if he wants to update
-						$confirm({text: 'Wil je nu de lijst bijwerken?', title: 'Bijwerken', ok: 'Ja', cancel: 'Nee'}).then(function(){
-							console.log("Update opdracht bevestigd");
-						
-							var mydate = new Date();
-							var noCache = mydate.getTime();
-							$http({
-								method: 'POST',
-								crossDomain: true,
-								dataType: "json",
-								data: { reg: "xN4p!t92Zy", cache: noCache},
-								url: 'http://www.tharros.info/sitelist.php'
-							}).then(function successCallback(response) {
-								return self.update(response.data).then(function(){
-									// update mystate with current date
-									console.log("success update");
-									state = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
-									console.log("date "+state);
-									self.changestate(state);
+				
+				console.log('Will run update: ' + runupdate)
+				// if runupdate else update lastcheck only with current datetime
+				if(runupdate){
+					return $http({
+						method: 'POST',
+						crossDomain: true,
+						dataType: "json",
+						data: { reg: "xN4p!t92Zy", app: 2, state: curstate.lastupdate},
+						url: 'http://www.tharros.info/checkapp.php'
+					}).then(function successCallback(response) {
+						// this callback will be called asynchronously
+						//e = JSON.stringify(response, null, 4)
+						console.log("success check " + response.data[0].update);
+						if (response.data[0].update === 0){
+							// ask user if he wants to update
+							$confirm({text: 'Wil je nu de lijst bijwerken?', title: 'Bijwerken', ok: 'Ja', cancel: 'Nee'}).then(function(){
+								console.log("Update opdracht bevestigd");
+							
+								var mydate = new Date();
+								var noCache = mydate.getTime();
+								$http({
+									method: 'POST',
+									crossDomain: true,
+									dataType: "json",
+									data: { reg: "xN4p!t92Zy", cache: noCache},
+									url: 'http://www.tharros.info/sitelist.php'
+								}).then(function successCallback(response) {
+									return self.update(response.data).then(function(){
+										// update mystate with current date
+										console.log("success update");
+										state = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
+										console.log("date "+state);
+										self.changestate(state,state);
+									});
+								},function errorCallback(response) {
+									console.log("failure update");
 								});
-							},function errorCallback(response) {
-								console.log("failure update");
 							});
-						});
-					}else{
-						console.log("No update needed");
-					}
-					return response.data[0].update ;
-				}, function errorCallback(response) {
-					// called asynchronously if an error occurs
-					console.log("failure check");
-					return response ;
-				});
+						}else{
+							check = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
+							self.changestate(curstate.lastupdate,check);
+							console.log("No update needed. Update time changed to " + check);
+						}
+						return response.data[0].update ;
+					}, function errorCallback(response) {
+						// called asynchronously if an error occurs
+						console.log("failure check");
+						//return response ;
+					});
+				}else{
+					console.log('No update needed!');
+				}
 	        });
 		};
 		
-		self.changestate = function(state) {
-	        return db.query('INSERT OR REPLACE INTO mystate (id,lastupdate,version) VALUES (?,?,?)',[1,state,"0.9.0"])
+		self.changestate = function(state,check) {
+	        return db.query('INSERT OR REPLACE INTO mystate (id,lastupdate,lastcheck,version) VALUES (?,?,?,?)',[1,state,check,"0.9.1"])
 	        .then(function(result){
-				console.log('Version 0.9.0 updated to '+state);
+				console.log('Version 0.9.1 updated to ' + state + 'last check: ' + check);
 	        });
 	    };
 		
