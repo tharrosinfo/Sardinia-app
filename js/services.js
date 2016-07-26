@@ -42,6 +42,10 @@
 			//var sqldrop = 'DROP TABLE mystate';
 			//self.query(sqldrop);
 			//console.log('mystate deleted');
+			
+			//var sqldrop = 'DROP TABLE sites';
+			//self.query(sqldrop);
+			//console.log('sites deleted');
 	
 	        angular.forEach(DB_CONFIG.tables, function(table) {
 	            var columns = [];
@@ -159,7 +163,7 @@
 						console.log("success check " + response.data[0].update);
 						if (response.data[0].update === 0){
 							// ask user if he wants to update
-							$confirm({text: 'Wil je nu de lijst bijwerken?', title: 'Bijwerken', ok: 'Ja', cancel: 'Nee'}).then(function(){
+							return $confirm({text: 'Wil je nu de lijst bijwerken?', title: 'Bijwerken', ok: 'Ja', cancel: 'Nee'}).then(function(){
 								console.log("Update opdracht bevestigd");
 							
 								var mydate = new Date();
@@ -176,31 +180,31 @@
 										console.log("success update");
 										state = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
 										console.log("date "+state);
-										self.changestate(state,state);
+										return self.changestate(state,state);
 									});
 								},function errorCallback(response) {
 									console.log("failure update");
 								});
 							});
 						}else{
-							check = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
-							self.changestate(curstate.lastupdate,check);
 							console.log("No update needed. Update time changed to " + check);
+							check = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
+							return self.changestate(curstate.lastupdate,check);
 						}
-						return response.data[0].update ;
 					}, function errorCallback(response) {
 						// called asynchronously if an error occurs
 						console.log("failure check");
-						//return response ;
+						return ;
 					});
 				}else{
 					console.log('No update needed!');
+					return ;
 				}
 	        });
 		};
 		
 		self.changestate = function(state,check) {
-	        return db.query('INSERT OR REPLACE INTO mystate (id,lastupdate,lastcheck,version) VALUES (?,?,?,?)',[1,state,check,"0.9.1"])
+	        return db.query('INSERT OR REPLACE INTO mystate (id,lastupdate,lastcheck,version) VALUES (?,?,?,?)',[1,state,check,"0.9.2"])
 	        .then(function(result){
 				console.log('Version 0.9.1 updated to ' + state + 'last check: ' + check);
 	        });

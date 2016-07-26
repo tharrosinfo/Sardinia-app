@@ -78,6 +78,7 @@
 	
 	// create the controller and inject Angular's $scope
     TharrosApp.controller('mainController', function($geolocation, $scope, $http, $filter, $confirm, MyItems) {
+		$scope.message = "De lijst wordt geladen. Even geduld." ;
 		MyItems.checkstate($http,$filter,$confirm).then(function() {
 			$geolocation.getCurrentPosition({
 				timeout: 60000
