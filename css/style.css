@@ -81,8 +81,8 @@ menu > div > menu-item > div > span {
 .mainlist {margin: .25em; list-style-type: none;width: 98%;padding: 0px;-webkit-box-shadow: 0 1px 3px rgba(41,41,41,0.2);-moz-box-shadow: 0 1px 3px rgba(41,41,41,0.2);
 box-shadow: 0 1px 3px rgba(41,41,41,0.2);-webkit-border-radius: .6em;border-radius: .6em;display: block;color: #000000;font-size: 1em;}
 .mainlist > li {display: block;position: relative;padding: 10px;overflow: auto;background: #ffffff;border-bottom: #dddddd 1px solid;max-width:100%}
-.mainlist > li h2 {text-align: left;font-size: 1.5em; margin-top: 10px}
-.mainlist > li img {padding: 0 15px 0 0;width:40%; max-width: 355px; -webkit-border-radius: .6em;border-radius: .6em;min-width:200px;margin-bottom:30px}
+.mainlist > li h2 {text-align: left;font-size: 1.5em; margin-top: 0px}
+.mainlist > li img {padding: 0 15px 0 0;width:40%; max-width: 355px; -webkit-border-radius: .6em;border-radius: .6em;min-width:180px;margin-bottom:30px}
 .mainlist > li p {text-align: left; font-size: 1em;font-weight: 400;margin: 0;max-width:98%;}
 .mainlist > li p em {font-weight: 600}
 
