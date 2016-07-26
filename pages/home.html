@@ -6,11 +6,11 @@
 		
 		<ul class="mainlist">
 			<li ng-repeat="site in sites">
-				<img src={{"images/"+site.image}}>
+				<img src="images/{{site.image}}" class="toleft">
 				<h2><a href="#/detail/{{site.id}}">{{site.name}}</a></h2>
 				<p>{{site.place}} ({{site.prov}})</p>
 				<p>{{site.cat}} </p>
-				<p>{{ distance(site.distance_acos) }} km</p>
+				<p>Afstand <em>{{ distance(site.distance_acos) }}</em> km</p>
 			</li>
 		</ul>
     </div>
