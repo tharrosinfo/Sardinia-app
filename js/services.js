@@ -187,8 +187,8 @@
 								});
 							});
 						}else{
+							var check = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
 							console.log("No update needed. Update time changed to " + check);
-							check = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
 							return self.changestate(curstate.lastupdate,check);
 						}
 					}, function errorCallback(response) {
@@ -204,7 +204,7 @@
 		};
 		
 		self.changestate = function(state,check) {
-	        return db.query('INSERT OR REPLACE INTO mystate (id,lastupdate,lastcheck,version) VALUES (?,?,?,?)',[1,state,check,"0.9.2"])
+	        return db.query('INSERT OR REPLACE INTO mystate (id,lastupdate,lastcheck,version) VALUES (?,?,?,?)',[1,state,check,"0.9.3"])
 	        .then(function(result){
 				console.log('Version 0.9.1 updated to ' + state + 'last check: ' + check);
 	        });
