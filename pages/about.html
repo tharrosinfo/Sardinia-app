@@ -1,14 +1,14 @@
 <!-- about.html -->
     <div class="text-center">
-        <h1>Help/Over</h1>
+        <h1>{{ 'HELP' | translate }}</h1>
 
-        <p>{{ message }}</p>
+        <p>{{ 'ABOUT' | translate }}</p>
 		
 		<ul class="mainlist">
-			<li>
+			<li ng-show="shownl">
 				<h2>Voorwaarden voor gebruik</h2>
-				<p class="toleft textbox">Met de app wordt de Tharros.info Sardinië app bedoeld<br>Met de website wordt de website www.tharros.info van dezelfde auteur bedoeld.<br>
-				Met de auteur wordt de ontwikkelaar van de software en de auteur van de content bedoeld</p>
+				<p class="toleft textbox">Met <b>de app</b> wordt de Sardinië app van tharros.info bedoeld<br>Met <b>de website</b> wordt de website www.tharros.info bedoeld.<br>
+				Met <b>de auteur</b> wordt de ontwikkelaar van de software en de auteur van de content bedoeld</p>
 				<p class="toleft textbox">Deze mobiele app is vrij te gebruiken. Eigenaarschap van inhoud en copyright berust bij de auteur van deze app tenzij expliciet anders aangegeven. 
 				Het is niet toegestaan afbeeldingen en teksten te gebruiken, door printen kopiëren of door welk ander elektronisch middel dan ook, zonder voorafgaande toestemming van de auteur 
 				of de eigenaar. De auteur geeft toestemming de open source software die gebruikt is in deze app en die vrijelijk beschikbaar is op internet onder de voorwaarden van de 
@@ -19,17 +19,71 @@
 				niet doorverkocht maar exclusief gebruikt voor de correcte werking van de app.</p>
 				<p class="toleft textbox">Deze app gebruikt geolocation<br>Deze app gebruikt lokaal geheugen voor de database<br>Deze app bevat externe links</p>
 			</li>
-			<li>
+			<li ng-show="showen">
+				<h2>Conditions for use</h2>
+				<p class="toleft textbox">With <b>the app</b> is intended the Sardinia app of tharros.info.<br>With <b>the website</b> is intended the website of www.tharros.info.<br>
+				With <b>the author</b> is intended the developer of the app and the author of the content.</p>
+				<p class="toleft textbox">This mobile app can be freely used. Ownership of the content and copyright rests with the author unless explicitly stated differently. 
+				It is not allowed to use images or texts on other sites through printed copies or any other electronic means without the prior written permission of the author.
+				The author gives permission to use the open source software used on this site that can be obtained freely on the internet and to adapt this for use under the conditions
+				of the GNU GENERAL PUBLIC LICENSE and if the reference to the orignal authors remain intact, including changes made by the author of this site.
+				It is allowed to use texts and images with reference (link or name) to the source (this website) for educational purposes as described in the international copyright. 
+				The author in that case cannot be held liable for the incorrect use of this information or for broken links as a result of changes on tharros.info.
+				Personal data obtained by using this app is not sold to third parties but used solely for the purpose of a correct functioning of this app. </p>
+				<p class="toleft textbox">This app uses geolocation<br>This app uses local storage for a database<br>This app contains links to external websites</p>
+			</li>
+			<li ng-show="showit">
+				<h2>Condizioni per l'uso</h2>
+				<p class="toleft textbox">Con <b>l'app</b> si intende qui l'app di Tharros.info Sardegna.<br>Con <b>il sito</b> si intende qui il sito web www.tharros.info.<br>
+				Con <b>l'autore</b> si intende qui lo sviluppatore dell'app e l'autore dei contenuti.</p>
+				<p class="toleft textbox">Questa app si può utlizzare liberamente. Il materiale pubblicato nell'app, costituito da immagini, riproduzioni fotografiche, testi 
+				ed articoli, è di proprietà dell'autore. Pertanto, tutto quanto ivi pubblicato non può essere copiato, modificato, riprodotto, scaricato o trasferito o comunque
+				essere in alcun modo utilizzato senza il preventivo consenso scritto dell'autore fatta salva la possibilità di un uso esclusivamente personale di
+				tale contenuto. L'autore dà permesso di usare open source software presente sul sito tharros.info sotto la tutela del GNU GENERAL PUBLIC LICENSE alla condizione 
+				che i riferimenti agli autori originali restino intatti. È ammesso l'utilizzo dei testi ed immagini usando il riferimento (nome oppure link) all'autore
+				per il solo scopo educativo come esposto nel diritto d'autore internazionale. L'autore non risponde in tal caso all'uso incorretto delle informazioni anche a 
+				seguito di cambiamenti nell'app o sul sito web stesso. L'app utilizza i dati personali ottenuti esclusivamente per il corretto funzionamento dell'app stesso e non vengono
+				messi a disposizione di terzi.</p>
+				<p class="toleft textbox">L'app utilizza la geoposizione (geolocation).<br>L'app utilizza la memoria locale per il database.<br>L'app contiene link a siti esterni.</p>
+			</li>
+			<li ng-if="shownl">
 				<h2>Help</h2>
-				<p class="toleft textbox">Overzichtslijst: Op de start pagina staat een overzichtslijst gerangschikt naar de dichtstbijzijnde bezienswaardigheid op basis van de 
-				huidige geografische locatie. Tik op de bezienswaardigheid om de detail pagina te zien.<br>
-				Detail pagina: Op de detail pagina staat een korte beschrijving en, voorzover bekend, informatie over adres, prijzen, openingstijden en een link naar de pagina web.<br>
-				Contact pagina: Voor hulp, vragen en suggesties staat hier hoe u contact op kunt nemen met de maker van de app.</p>
+				<p class="toleft textbox"><b>Lijst van bezienswaardigheden en evenementen:</b> Op de start pagina staat een overzichtslijst gerangschikt naar de dichtstbijzijnde bezienswaardigheid op basis van de 
+				huidige geografische locatie. Tik op de bezienswaardigheid of het evenement om de detail pagina te zien.<br>
+				<b>Detail pagina:</b> Op de detail pagina staat een korte beschrijving en, voorzover bekend, informatie over adres, prijzen, openingstijden en een link naar de pagina web.<br>
+				<b>Contact pagina:</b> Voor hulp, vragen en suggesties staat hier hoe u contact op kunt nemen met de maker van de app.</p>
+			</li>
+			<li ng-if="showen">
+				<h2>Help</h2>
+				<p class="toleft textbox"><b>List of sites and events:</b> The homepage contains a list of sites, museums and events that are nearest to your current location. 
+				Tap on the entry to show the detailed information.<br>
+				<b>Detail page:</b> The details page contains a short description and if known information with opening hours, contact information, a link to the official website and prices.<br>
+				<b>Contact page:</b> For help, questions, suggestions you can find here the contact information.</p>
+			</li>
+			<li ng-if="showit">
+				<h2>Aiuto</h2>
+				<p class="toleft textbox"><b>Lista dei siti ed eventi:</b> Nella homepage vengono elencati i siti ed eventi in ordine di distanza dalla posizione geografica attuale rilevata 
+				partendo dal sito più vicino. Per vedere le informazioni dettagliate tocca il sito o l'evento nell'elenco.<br>
+				<b>Pagina Dettagli:</b> Nella pagina dettagli si trova una descrizione breve del sito o del evento e informazioni su orari, prezzi, sito web ufficiale.<br>
+				<b>Pagina Contatta:</b> Informazioni su come ottenere aiuto, fare domande oppure lasciare commenti per l'autore dell'app.</p>
+			</li>
+			<li ng-if="shownl">
+				<h2>Credits</h2>
+				<p class="toleft textbox">Deze app is ontwikkeld door Timbert Kriek met behulp van open software. 
+				Alle sites, musea en evenementen hier weergegeven zijn persoonlijk bezocht door de auteur.</p>
+			</li>
+			<li ng-if="showen">
+				<h2>Credits</h2>
+				<p class="toleft textbox">This app is developed by Timbert Kriek with the use of open software. 
+				All sites, musea and events have been personally visited by the author.</p>
+			</li>
+			<li ng-if="showit">
+				<h2>Crediti</h2>
+				<p class="toleft textbox">Questa app è stata sviluppata da Timbert Kriek con l'utilizzo di open software. 
+				L'autore è stato di persona presso tutti i siti, i musei e gli eventi elencati nell'app.</p>
 			</li>
 			<li>
-				<h2>Credits</h2>
-				<p class="toleft textbox">Deze app is ontwikkeld door Timbert Kriek met behulp van open software. Al het beeld materiaal is copyright van de auteur.
-				Alle sites zijn persoonlijk bezocht door de auteur.</p>
+				<img src="img/sardinia.png" class="wid100">
 			</li>
 		</ul>
     </div>

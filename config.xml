@@ -2,13 +2,14 @@
 <widget xmlns       = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "sardinia.app"
-        versionCode = "14"
-        version     = "0.9.3">
+        versionCode = "15"
+        version     = "0.9.4">
 
-    <preference name="phonegap-version" value="cli-5.2.0" />
+    <preference name="phonegap-version" value="cli-6.3.0" />
  
     <name>Tharros info Sardegna</name>
     <icon src="img/favicon.png" />
+	<icon src="img/favicon.png" platform="ios" width="180" height="180" />
  
     <description>
         Discover Sardinia by Tharrosinfo
@@ -26,8 +27,11 @@
 	<access origin="*://*.googleusercontent.com/*" subdomains="true" />
 
 	<gap:platform name="android" />
+	<gap:platform name="ios" />
 
 	<preference name="android-minSdkVersion" value="10" />
+	<preference name="AndroidPersistentFileLocation" value="Compatibility" />
+	<preference name="exit-on-suspend" value="true" />
 	
 	<gap:plugin name="cordova-plugin-whitelist" source="npm" />
 	<gap:plugin name="cordova-plugin-camera" source="npm" />

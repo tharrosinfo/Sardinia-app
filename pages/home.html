@@ -1,8 +1,12 @@
 <!-- home.html -->
     <div class="text-center">
-        <h1>Bezienswaardigheden en evenementen</h1>
+        <h1>{{ 'SITES' | translate }}</h1>
 
-        <p>{{ message }}</p>
+        <p>{{ 'LIST' | translate }}</p>
+		
+		<p class="text-center" ng-hide="dataLoaded">
+			<img src="img/loading.gif">
+		</p>
 		
 		<ul class="mainlist">
 			<li ng-repeat="site in sites">
@@ -10,7 +14,7 @@
 				<h2><a href="#/detail/{{site.id}}">{{site.name}}</a></h2>
 				<p>{{site.place}} ({{site.prov}})</p>
 				<p>{{site.cat}} </p>
-				<p>Afstand <em>{{ distance(site.distance_acos) }}</em> km</p>
+				<p>{{ 'DISTANCE' | translate }} <em>{{ distance(site.distance_acos) }}</em> km</p>
 			</li>
 		</ul>
     </div>
