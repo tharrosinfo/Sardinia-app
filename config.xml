@@ -2,8 +2,8 @@
 <widget xmlns       = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "sardinia.app"
-        versionCode = "16"
-        version     = "0.9.5">
+        versionCode = "17"
+        version     = "0.9.6">
 
     <preference name="phonegap-version" value="cli-6.3.0" />
  
