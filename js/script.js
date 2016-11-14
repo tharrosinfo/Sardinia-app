@@ -171,9 +171,9 @@
 		$scope.shownl = false;
 		$scope.showit = false;
 		$scope.showen = false;
-		if(myVars.lang == 'nl'){
+		if((myVars.lang).split("-")[0] == 'nl'){
 			$scope.shownl = true;
-		}else if (myVars.lang == 'it'){
+		}else if ((myVars.lang).split("-")[0] == 'it'){
 			$scope.showit = true;
 		}else{
 			$scope.showen = true;
@@ -184,9 +184,9 @@
         $scope.shownl = false;
 		$scope.showit = false;
 		$scope.showen = false;
-		if(myVars.lang == 'nl'){
+		if((myVars.lang).split("-")[0] == 'nl'){
 			$scope.shownl = true;
-		}else if (myVars.lang == 'it'){
+		}else if ((myVars.lang).split("-")[0] == 'it'){
 			$scope.showit = true;
 		}else{
 			$scope.showen = true;
