@@ -27,9 +27,9 @@
         </header>
 		
 		<menu visible="leftVisible" alignment="left">
-    		<menu-item hash="#/"><i class="fa fa-home"></i> Sites</menu-item>
-    		<menu-item hash="#about"><i class="fa fa-shield"></i> Help/Over</menu-item>
-   	 		<menu-item hash="#contact"><i class="fa fa-comment"></i> Contact</a></menu-item>
+    		<menu-item hash="#/"><i class="fa fa-home"></i> {{ 'SITES' | translate }}</menu-item>
+    		<menu-item hash="#about"><i class="fa fa-shield"></i> {{ 'HELP' | translate }}</menu-item>
+   	 		<menu-item hash="#contact"><i class="fa fa-comment"></i> {{ 'CONTACT' | translate }}</a></menu-item>
 		</menu>
 		
 
@@ -49,6 +49,8 @@
 	<script src="js/ui-bootstrap-tpls-0.13.4.min.js"></script>
 	<script src="js/ngGeolocation.min.js"></script>
 	<script src="js/angular-confirm.js"></script>
+	<script src="js/angular-sanitize.min.js"></script>
+	<script src="js/angular-translate.min.js"></script>
 	<script src="js/script.js"></script>
 	<script src="js/services.js"></script>
 

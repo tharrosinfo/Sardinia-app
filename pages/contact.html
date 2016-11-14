@@ -1,17 +1,36 @@
 <!-- contact.html -->
     <div class="text-center">
-        <h1>Contact informatie</h1>
+        <h1>{{ 'CONTACT' | translate }}</h1>
 
-        <p>{{ message }}</p>
+        <p>{{ 'CONTACT_TEXT' | translate }}</p>
 		
 		<ul class="mainlist">
-			<li>
+			<li ng-show="shownl">
 				<p class="toleft textbox">Deze app is samengesteld met informatie vergaard in de afgelopen jaren en gepubliceerd op de website tharros.info. 
 				Met deze app heb je de informatie bij de hand gedurende je bezoek aan Sardinië en kan je op je gemak de bezienswaardigheden uitzoeken die op 
 				dat moment het dichtste bij zijn.<br>Mocht je vragen, opmerkingen of suggesties hebben dan kan je contact opnemen met @tharrosinfo op facebook 
 				en twitter of via het gastenboek van tharros.info of stuur een email aan de webmaster van tharros.info.</p>
 				<h2>Veel plezier met de app</h2>
-				<p class="toleft textbox"><a href="http://www.tharros.info/">Tharros.info</a></p>
+			</li>
+			<li ng-show="showen">
+				<p class="toleft textbox">This app has been compiled with the information gathered in the past years and published on the website of tharros.info.
+				With this app you have ready information at hand during your visit to Sardinia to find the interesting sites, musea and events 
+				that are nearest to you.<br>Should you have any questions, remarks or suggestions on the content or the app you can contact us at @tharrosinfo
+				on Facebook and Twitter or via the guest book on tharros.info, or send an email at the webmaster of tharros.info</p>
+				<h2>Have fun with the app</h2>
+			</li>
+			<li ng-show="showit">
+				<p class="toleft textbox">L'app è stata creata utilizzando delle informazioni ottenute visitando i siti negli ultimi anni e successivamente pubblicate sul sito tharros.info. 
+				Con questa app quindi puoi avere le informazioni direttamente con te visitando la Sardegna per scegliere comodamente i siti, musei ed eventi da visitare
+				nelle vicinanze.<br>Se avete domande, suggerimenti oppure volete lasciare un commento potete contattarci su Facebook e Twitter @tharrosinfo, 
+				tramite il libro ospiti su tharros.info oppure inviando un email al webmaster a tharros.info.</p>
+				<h2>Buon divertimento con l'app</h2>
+			</li>
+			<li>
+				<a href="http://www.tharros.info/" class="mainbtn">{{ 'VISIT' | translate }}</a>
+			</li>
+			<li>
+				<img src="img/avatar.jpg" class="wid100">
 			</li>
 		</ul>
     </div>

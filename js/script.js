@@ -1,7 +1,7 @@
 // script.js
 
     // create the module and name it TharrosApp
-    var TharrosApp = angular.module('TharrosApp', ['ngRoute','ui.bootstrap','ngGeolocation','angular-confirm'], function($httpProvider) {
+    var TharrosApp = angular.module('TharrosApp', ['ngRoute','ui.bootstrap','ngGeolocation','angular-confirm','ngSanitize','pascalprecht.translate'], function($httpProvider) {
 		  // Use x-www-form-urlencoded Content-Type
 		  $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 
@@ -47,6 +47,10 @@
 		  }];
 	});
 	
+	TharrosApp.value('myVars', {
+		lang:(navigator.language) ? navigator.language : navigator.userLanguage
+		//lang: 'it' // en , it , nl
+	});
 	
 	// configure our routes
     TharrosApp.config(function($routeProvider) {
@@ -76,10 +80,60 @@
             });
     });
 	
+	// configuration for languages
+	TharrosApp.config(function($translateProvider) {
+		$translateProvider.translations('en', {
+			SITES: 'Sites and Events',
+			HELP: 'Help/About',
+			CONTACT: 'Contact',
+			LIST: 'A list of Sites and Events to visit',
+			INFO: 'Detailed information',
+			ABOUT: 'About and Help on this app',
+			CONTACT_TEXT: 'How to contact us',
+			VISIT: 'Visit the website of Tharros.info',
+			DISTANCE: 'Distance',
+			UPDATE_MESSAGE: 'Do you want to update the list now?',
+			UPDATE_TITLE: 'Update',
+			NOK: 'No'
+		})
+		.translations('nl', {
+			SITES: 'Sites en Musea',
+			HELP: 'Help/Over',
+			CONTACT: 'Contact',
+			LIST: 'Lijst van bezienswaardigheden en evenementen',
+			INFO: 'Detail informatie',
+			ABOUT: 'Over de app en help bij deze app',
+			CONTACT_TEXT: 'Contact opnemen met ons',
+			VISIT: 'Bezoek de website van Tharros.info',
+			DISTANCE: 'Afstand',
+			UPDATE_MESSAGE: 'Wil je nu de lijst bijwerken?',
+			UPDATE_TITLE: 'Bijwerken',
+			NOK: 'Nee'
+		})
+		.translations('it', {
+			SITES: 'Siti e Eventi',
+			HELP: 'Aiuto/Info',
+			CONTACT: 'Contatta',
+			LIST: 'Elenco dei siti e degli eventi da visitare',
+			INFO: 'Informazioni dettagliate',
+			ABOUT: 'Informazioni su e Aiuto per l\'app',
+			CONTACT_TEXT: 'Come contattarci',
+			VISIT: 'Visita il sito web di Tharros.info',
+			DISTANCE: 'Distanza',
+			UPDATE_MESSAGE: 'Vuoi aggiornare la lista adesso?',
+			UPDATE_TITLE: 'Aggiornare',
+			NOK: 'No'
+		});
+		$translateProvider.preferredLanguage('en');
+		$translateProvider.useSanitizeValueStrategy('escape');
+	});
+	
 	// create the controller and inject Angular's $scope
-    TharrosApp.controller('mainController', function($geolocation, $scope, $http, $filter, $confirm, MyItems) {
-		$scope.message = "De lijst wordt geladen. Even geduld." ;
-		MyItems.checkstate($http,$filter,$confirm).then(function() {
+    TharrosApp.controller('mainController', function($geolocation, $scope, $http, $filter, $confirm, $translate, MyItems, myVars) {
+		console.log(myVars.lang);
+		$scope.dataLoaded = false ;
+		$translate.use(myVars.lang);
+		MyItems.checkstate($http,$filter,$confirm,$translate,myVars.lang).then(function() {
 			$geolocation.getCurrentPosition({
 				timeout: 60000
 			}).then(function(position) {
@@ -87,11 +141,10 @@
 				$scope.mylat = $scope.coords.latitude;
 				$scope.mylon = $scope.coords.longitude;
 				console.log("My coords "+ $scope.mylat + " , " + $scope.mylon);
-						
 				MyItems.nearest($scope.mylat,$scope.mylon).then(function(sites){
 					$scope.sites = sites;
-					$scope.message = "Overzichtslijst" ;
 					$scope.distance = function(distacos) { return (Math.acos(distacos) * 6371).toFixed(2)} ;
+					$scope.dataLoaded = true;
 				});
 			});
 		});
@@ -110,18 +163,35 @@
 				$scope.sites = sites;
 				$scope.infohtml = $sce.trustAsHtml(sites.info) ;
 				//$scope.distance = function(distacos) { return (Math.acos(distacos) * 6371).toFixed(2)} ;
-				$scope.message = "Informatie";
 			});
 		});
     });
 
-    TharrosApp.controller('aboutController', function($scope) {
-        $scope.message = 'Over de app en help bij de app';
-    });
+    TharrosApp.controller('aboutController', function($scope, myVars) {
+		$scope.shownl = false;
+		$scope.showit = false;
+		$scope.showen = false;
+		if(myVars.lang == 'nl'){
+			$scope.shownl = true;
+		}else if (myVars.lang == 'it'){
+			$scope.showit = true;
+		}else{
+			$scope.showen = true;
+		}
+	});
 
-    TharrosApp.controller('contactController', function($scope) {
-        $scope.message = 'Contact informatie';
-    });
+    TharrosApp.controller('contactController', function($scope, myVars) {
+        $scope.shownl = false;
+		$scope.showit = false;
+		$scope.showen = false;
+		if(myVars.lang == 'nl'){
+			$scope.shownl = true;
+		}else if (myVars.lang == 'it'){
+			$scope.showit = true;
+		}else{
+			$scope.showen = true;
+		}
+	});
 	
 	TharrosApp.controller("indexController", function($scope, $rootScope) {
 	    $scope.leftVisible = false;
