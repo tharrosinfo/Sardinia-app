@@ -132,7 +132,7 @@
     TharrosApp.controller('mainController', function($geolocation, $scope, $http, $filter, $confirm, $translate, MyItems, myVars) {
 		console.log(myVars.lang);
 		$scope.dataLoaded = false ;
-		$translate.use(myVars.lang);
+		$translate.use((myVars.lang).split("-")[0]); //(myVars.lang).split("-")[0]
 		MyItems.checkstate($http,$filter,$confirm,$translate,myVars.lang).then(function() {
 			$geolocation.getCurrentPosition({
 				timeout: 60000
