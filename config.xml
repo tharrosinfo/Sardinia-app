@@ -2,8 +2,8 @@
 <widget xmlns       = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "sardinia.app"
-        versionCode = "17"
-        version     = "0.9.6">
+        versionCode = "18"
+        version     = "0.9.7">
 
     <preference name="phonegap-version" value="cli-6.3.0" />
  
@@ -32,13 +32,12 @@
 	<preference name="android-minSdkVersion" value="10" />
 	<preference name="AndroidPersistentFileLocation" value="Compatibility" />
 	<preference name="exit-on-suspend" value="true" />
+	<preference name="permissions" value="none"/>
 	
 	<gap:plugin name="cordova-plugin-whitelist" source="npm" />
-	<gap:plugin name="cordova-plugin-camera" source="npm" />
 	<gap:plugin name="cordova-plugin-device" source="npm" />
 	<gap:plugin name="cordova-plugin-file" source="npm" />
 	<gap:plugin name="cordova-plugin-geolocation" source="npm" />
-	<gap:plugin name="cordova-plugin-media" source="npm" />
 	<gap:plugin name="cordova-plugin-network-information" source="npm" />
 	<gap:plugin name="cordova-plugin-inappbrowser" source="npm" />
 	
