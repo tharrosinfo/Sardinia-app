@@ -18,6 +18,7 @@
 					{name: 'sin_lng', type: 'float(17,15)'},
 					{name: 'description', type: 'longtext'},
 					{name: 'info', type: 'longtext'}
+					// add fields gallery, sites
 				]
 			},
 			{
@@ -205,13 +206,16 @@
 		};
 		
 		self.changestate = function(state,check) {
-	        return db.query('INSERT OR REPLACE INTO mystate (id,lastupdate,lastcheck,version) VALUES (?,?,?,?)',[1,state,check,"0.9.7"])
+	        return db.query('INSERT OR REPLACE INTO mystate (id,lastupdate,lastcheck,version) VALUES (?,?,?,?)',[1,state,check,"0.9.8"])
 	        .then(function(result){
 				console.log('Version 0.9.7 updated to ' + state + 'last check: ' + check);
 	        });
 	    };
 		
 		self.update = function(sites){
+			// if version 0.9.8 then add columns 
+			
+			// if version 0.9.8 run query else run new query
 			var sql = "INSERT OR REPLACE INTO sites " +
 		            "(id,cat,image,place,prov,name,coordGlng,coordGlat,sin_lat,cos_lat,sin_lng,cos_lng,description,info) " +
 		            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";

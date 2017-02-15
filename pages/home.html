@@ -10,11 +10,13 @@
 		
 		<ul class="mainlist">
 			<li ng-repeat="site in sites">
+				<div ng-click="go('detail/'+ site.id)">
 				<img src="images/{{site.image}}" class="toleft">
 				<h2><a href="#/detail/{{site.id}}">{{site.name}}</a></h2>
 				<p>{{site.place}} ({{site.prov}})</p>
 				<p>{{site.cat}} </p>
 				<p>{{ 'DISTANCE' | translate }} <em>{{ distance(site.distance_acos) }}</em> km</p>
+				</div>
 			</li>
 		</ul>
     </div>

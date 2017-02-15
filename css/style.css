@@ -1,6 +1,10 @@
 
+header {position:fixed;top:0;left:0;right:0;z-index: 99999}
+#main {margin-top:80px}
 h1 {font-size: 1.75em}
-.navbar-default {background-color: #213E69}
+.header:before {padding: 0px; padding-left: 1.5em; content:""; background-image: url(../img/sardinia.png);
+background-position: left center; background-repeat: no-repeat;background-size: 20px 20px;}
+.navbar-default {background-color: #0066ff}
 .navbar-brand {color: #fff !important} 
 
 /* left menu */
@@ -35,6 +39,7 @@ menu > div.left {
   left: -250px;
 }
 menu > div.show.left {
+   margin-top:60px;
   transform: translate3d(250px, 0, 0);
   -ms-transform: translate3d(250px, 0, 0);
   -webkit-transform: translate3d(250px, 0, 0);
@@ -78,19 +83,20 @@ menu > div > menu-item > div > span {
 }
 
 /* main sites list */
-.mainlist {margin: .25em; list-style-type: none;width: 98%;padding: 0px;-webkit-box-shadow: 0 1px 3px rgba(41,41,41,0.2);-moz-box-shadow: 0 1px 3px rgba(41,41,41,0.2);
+.mainlist {margin: .25em; list-style-type: none;width: 98%;max-width:600px !important; padding: 0px; margin: auto;-webkit-box-shadow: 0 1px 3px rgba(41,41,41,0.2);-moz-box-shadow: 0 1px 3px rgba(41,41,41,0.2);
 box-shadow: 0 1px 3px rgba(41,41,41,0.2);-webkit-border-radius: .6em;border-radius: .6em;display: block;color: #000000;font-size: 1em;}
 .mainlist > li {display: block;position: relative;padding: 10px;overflow: auto;background: #ffffff;border-bottom: #dddddd 1px solid;max-width:100%}
 .mainlist > li h2 {text-align: left;font-size: 1.5em; margin-top: 0px}
 .mainlist > li img {padding: 0 15px 0 0;width:40%; max-width: 355px; -webkit-border-radius: .6em;border-radius: .6em;min-width:180px;margin-bottom:30px}
-.mainlist > li p {text-align: left; font-size: 1em;font-weight: 400;margin: 0;max-width:98%;}
+.mainlist > li p {text-align: left; font-size: 1em;font-weight: 400;margin: 0;}
 .mainlist > li p em {font-weight: 600}
 
 .toleft {float:left}
 .toright {float:right}
 .wid100 {max-width:455px !important; width: 100% !important;padding: 0px !important;margin-bottom: 10px;}
 .textbox, .infobox {padding-top: 10px}
-.infobox {background-color: #e4e4e4}
+.infobox {background-color: #e4e4e4 !important}
+
 .mainbtn {width: 25%; min-width: 150px; border: 1px solid #555;	margin: auto; color: #000; font-size: 15px;line-height: 1em;
      background: #ededed; background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ccc)); -webkit-appearance: none;-webkit-box-shadow: 1px 1px 1px #fff;
  	  -webkit-border-radius: 0.5em; padding: 0.5em 1em 0.5em 0.75em;}

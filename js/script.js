@@ -129,38 +129,41 @@
 	});
 	
 	// create the controller and inject Angular's $scope
-    TharrosApp.controller('mainController', function($geolocation, $scope, $http, $filter, $confirm, $translate, MyItems, myVars) {
-		console.log(myVars.lang);
+    TharrosApp.controller('mainController', function($geolocation, $rootScope, $scope, $http, $filter, $confirm, $translate, $location, MyItems, myVars) {
+		$rootScope.siteinfo = false;
 		$scope.dataLoaded = false ;
 		$translate.use((myVars.lang).split("-")[0]); //(myVars.lang).split("-")[0]
 		MyItems.checkstate($http,$filter,$confirm,$translate,myVars.lang).then(function() {
 			$geolocation.getCurrentPosition({
-				timeout: 60000
+				timeout: 10000
 			}).then(function(position) {
 				$scope.coords = position.coords;
 				$scope.mylat = $scope.coords.latitude;
 				$scope.mylon = $scope.coords.longitude;
-				console.log("My coords "+ $scope.mylat + " , " + $scope.mylon);
 				MyItems.nearest($scope.mylat,$scope.mylon).then(function(sites){
 					$scope.sites = sites;
 					$scope.distance = function(distacos) { return (Math.acos(distacos) * 6371).toFixed(2)} ;
+					$scope.go = function ( path ) {$location.path( path );};
 					$scope.dataLoaded = true;
 				});
 			});
 		});
 	});
 	
-	TharrosApp.controller('detailController', function($geolocation,$sce,$scope, MyItems, $routeParams) {
+	TharrosApp.controller('detailController', function($geolocation,$sce,$rootScope,$scope, MyItems, myVars, $routeParams) {
+		$rootScope.siteinfo = true;
 		$geolocation.getCurrentPosition({
-			timeout: 60000
+			timeout: 10000
 		}).then(function(position) {
 			$scope.coords = position.coords;
 			$scope.mylat = $scope.coords.latitude;
 			$scope.mylon = $scope.coords.longitude;
-			console.log("My coords "+ $scope.mylat + " , " + $scope.mylon);
 			$scope.sites = [];
 			MyItems.getById($routeParams.id).then(function(sites){
+				console.log(myVars.lang + "scope getbyId");
 				$scope.sites = sites;
+				$scope.siteCoords = $scope.sites.coordGlat+','+$scope.sites.coordGlng;
+				$scope.siteLang = myVars.lang;
 				$scope.infohtml = $sce.trustAsHtml(sites.info) ;
 				//$scope.distance = function(distacos) { return (Math.acos(distacos) * 6371).toFixed(2)} ;
 			});
@@ -193,7 +196,8 @@
 		}
 	});
 	
-	TharrosApp.controller("indexController", function($scope, $rootScope) {
+	TharrosApp.controller("indexController", function($scope, $rootScope, myVars) {
+		
 	    $scope.leftVisible = false;
 	    $scope.rightVisible = false;
 	
@@ -282,6 +286,72 @@
 	             }
 	         }
 	     }
+	});
+	
+	TharrosApp.filter("convertDecimalToMin",function() {
+		return function(nlatlng, lang) {
+			var sDeg;
+			if(nlatlng != undefined){
+				/* 
+					Input:  Lat and Lng 
+					Output: String with Latitude & Longitude in Degree Minute Second 
+					Compass format 
+					strLng defined as global var but you can also use language detection instead
+				*/
+				var partsOfStr = nlatlng.toString().split(','); 
+				if (lang == "nl"){
+				   strNorth = "NB" ;
+				   strSouth = "ZB" ;
+				   strEast = "OL" ;
+				   strWest = "WL" ;
+				}else if (lang == "it"){
+				   strNorth = "N" ;
+				   strSouth = "S" ;
+				   strEast = "E" ;
+				   strWest = "O" ;
+				}else{
+				   strNorth = "N" ;
+				   strSouth = "S" ;
+				   strEast = "E" ;
+				   strWest = "W" ;
+				}
+				var lat = parseFloat(partsOfStr[0]); 
+				var lng = parseFloat(partsOfStr[1]); 
+				var dirLat; 
+				var dirLng; 
+				if (lat > 0) { 
+						dirLat = strNorth; 
+				} 
+				else { 
+						dirLat = strSouth; 
+						lat = lat * -1; 
+				} 
+				if (lng > 0) { 
+						dirLng = strEast; 
+				} 
+				else { 
+						dirLng = strWest; 
+						lng = lng * -1; 
+				} 
+
+
+				var degLat = parseInt(lat); 
+				var degLng = parseInt(lng); 
+				var decLat = lat - degLat; 
+				var decLng = lng - degLng; 
+				var dmnLat = 60 * decLat; 
+				var dmnLng = 60 * decLng; 
+				var minLat = parseInt(dmnLat);
+				var minLng = parseInt(dmnLng);
+				var dscLat = dmnLat - minLat; 
+				var dscLng = dmnLng - minLng; 
+				var secLat = parseInt(60 * dscLat);
+				var secLng = parseInt(60 * dscLng);
+				var sDeg = degLat + '\xB0' + minLat + "'" + secLat + '" ' + dirLat + ", " + degLng + '\xB0' + minLng + "'" + secLng + '" ' + dirLng; 
+			}
+			return sDeg; 
+		}
+		
 	});
 	
 	
