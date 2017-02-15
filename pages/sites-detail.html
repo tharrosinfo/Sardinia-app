@@ -10,8 +10,13 @@
 				<h2>{{sites.name}}</h2>
 				<p>{{sites.place}} ({{sites.prov}})</p>
 				<p>{{sites.cat}}</p>
+				<p>{{siteCoords | convertDecimalToMin: siteLang}}</p>
+			</li>
+			<li>
 				<p class="toleft textbox">{{sites.description}} </p>
-				<p class="toleft infobox" ng-bind-html="infohtml"></p>
+			</li>
+			<li class="infobox">
+				<p ng-bind-html="infohtml"></p>
 		    </li>
 		</ul>
     </div>
