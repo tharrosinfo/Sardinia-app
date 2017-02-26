@@ -135,12 +135,20 @@
 		$translate.use((myVars.lang).split("-")[0]); //(myVars.lang).split("-")[0]
 		MyItems.checkstate($http,$filter,$confirm,$translate,myVars.lang).then(function() {
 			$geolocation.getCurrentPosition({
-				timeout: 10000
+				timeout: 60000
 			}).then(function(position) {
 				$scope.coords = position.coords;
 				$scope.mylat = $scope.coords.latitude;
 				$scope.mylon = $scope.coords.longitude;
 				MyItems.nearest($scope.mylat,$scope.mylon).then(function(sites){
+					$scope.sites = sites;
+					$scope.distance = function(distacos) { return (Math.acos(distacos) * 6371).toFixed(2)} ;
+					$scope.go = function ( path ) {$location.path( path );};
+					$scope.dataLoaded = true;
+				});
+			},function(error){
+				console.log("Geo location error "+error.error.message);
+				MyItems.nearest().then(function(sites){
 					$scope.sites = sites;
 					$scope.distance = function(distacos) { return (Math.acos(distacos) * 6371).toFixed(2)} ;
 					$scope.go = function ( path ) {$location.path( path );};
@@ -152,12 +160,12 @@
 	
 	TharrosApp.controller('detailController', function($geolocation,$sce,$rootScope,$scope, MyItems, myVars, $routeParams) {
 		$rootScope.siteinfo = true;
-		$geolocation.getCurrentPosition({
-			timeout: 10000
-		}).then(function(position) {
-			$scope.coords = position.coords;
-			$scope.mylat = $scope.coords.latitude;
-			$scope.mylon = $scope.coords.longitude;
+		//$geolocation.getCurrentPosition({
+		//	timeout: 60000
+		//}).then(function(position) {
+			//$scope.coords = position.coords;
+			//$scope.mylat = $scope.coords.latitude;
+			//$scope.mylon = $scope.coords.longitude;
 			$scope.sites = [];
 			MyItems.getById($routeParams.id).then(function(sites){
 				console.log(myVars.lang + "scope getbyId");
@@ -167,7 +175,7 @@
 				$scope.infohtml = $sce.trustAsHtml(sites.info) ;
 				//$scope.distance = function(distacos) { return (Math.acos(distacos) * 6371).toFixed(2)} ;
 			});
-		});
+		//});
     });
 
     TharrosApp.controller('aboutController', function($scope, myVars) {
@@ -320,20 +328,17 @@
 				var dirLat; 
 				var dirLng; 
 				if (lat > 0) { 
-						dirLat = strNorth; 
-				} 
-				else { 
-						dirLat = strSouth; 
-						lat = lat * -1; 
+					dirLat = strNorth; 
+				}else { 
+					dirLat = strSouth; 
+					lat = lat * -1; 
 				} 
 				if (lng > 0) { 
-						dirLng = strEast; 
+					dirLng = strEast; 
+				}else { 
+					dirLng = strWest; 
+					lng = lng * -1; 
 				} 
-				else { 
-						dirLng = strWest; 
-						lng = lng * -1; 
-				} 
-
 
 				var degLat = parseInt(lat); 
 				var degLng = parseInt(lng); 

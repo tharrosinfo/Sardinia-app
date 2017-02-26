@@ -5,12 +5,19 @@
         versionCode = "19"
         version     = "0.9.8">
 
-    <preference name="phonegap-version" value="cli-6.3.0" />
+    <preference name="phonegap-version" value="cli-6.5.0" />
  
     <name>Tharros info Sardegna</name>
 	<icon src="icon.png" />
-    <icon src="img/favicon.png" />
-	<icon src="img/favicon.png" platform="ios" width="180" height="180" />
+	<platform name="ios">
+		<icon src="img/sardinia.png" />
+		<icon src="img/icon-60@3x.png" width="180" height="180" />
+		<!-- iPhone -->
+		<icon src="img/icon-60@2x.png" width="120" height="120" />
+		<!-- iPad -->
+		<icon src="img/icon-76.png" gap:platform="ios" width="76" height="76" />
+        <icon src="img/icon-76@2x.png" gap:platform="ios" width="152" height="152" />
+	 </platform>
  
     <description>
         Discover Sardinia by Tharrosinfo
@@ -36,12 +43,11 @@
 	<preference name="StatusBarOverlaysWebView" value="false" />
 	<preference name="StatusBarBackgroundColor" value="#000000" />
 	
+	<gap:plugin name="cordova-plugin-statusbar" source="npm" />
 	<gap:plugin name="cordova-plugin-whitelist" source="npm" />
-	<gap:plugin name="cordova-plugin-camera" source="npm" />
 	<gap:plugin name="cordova-plugin-device" source="npm" />
 	<gap:plugin name="cordova-plugin-file" source="npm" />
 	<gap:plugin name="cordova-plugin-geolocation" source="npm" />
-	<gap:plugin name="cordova-plugin-media" source="npm" />
 	<gap:plugin name="cordova-plugin-network-information" source="npm" />
 	<gap:plugin name="cordova-plugin-inappbrowser" source="npm" />
 	

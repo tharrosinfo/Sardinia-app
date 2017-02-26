@@ -104,7 +104,7 @@
 	        });
 	    };
 		
-		self.nearest = function(lat,lon) {
+		self.nearest = function(lat = 39.21333,lon = 9.11223) { // default values Cagliari
 			cur_cos_lat = Math.cos(lat * Math.PI / 180);
 			cur_sin_lat = Math.sin(lat * Math.PI / 180);
 			cur_cos_lng = Math.cos(lon * Math.PI / 180);
@@ -115,11 +115,7 @@
 			' FROM sites ORDER BY "distance_acos" DESC' +
 			' ',[cur_sin_lat,cur_cos_lat,cur_sin_lng,cur_cos_lng] ) //LIMIT 15
 			.then(function(result){
-				//for(var i = 0; i < result.rows.length; i++) {
-					//console.log("in km " + Math.acos(result.rows.item(i).distance_acos) * 6371);
-                    //console.log("SELECTED -> " + result.rows.item(i).id + " " + result.rows.item(i).distance_acos);
-                //}
-	            return db.fetchAll(result);
+				return db.fetchAll(result);
 	        });
 	    };
 	    
@@ -208,7 +204,7 @@
 		self.changestate = function(state,check) {
 	        return db.query('INSERT OR REPLACE INTO mystate (id,lastupdate,lastcheck,version) VALUES (?,?,?,?)',[1,state,check,"0.9.8"])
 	        .then(function(result){
-				console.log('Version 0.9.7 updated to ' + state + 'last check: ' + check);
+				console.log('Version 0.9.8 updated to ' + state + 'last check: ' + check);
 	        });
 	    };
 		
