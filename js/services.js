@@ -38,7 +38,7 @@
 	    self.db = null;
 	
 	    self.init = function() {
-	        self.db = window.openDatabase(DB_CONFIG.name, '1.0', 'database', -1);
+	        self.db = window.openDatabase(DB_CONFIG.name, '1.0', 'database', 1000000);
 			
 			//var sqldrop = 'DROP TABLE mystate';
 			//self.query(sqldrop);
