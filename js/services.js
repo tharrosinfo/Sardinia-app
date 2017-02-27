@@ -104,7 +104,7 @@
 	        });
 	    };
 		
-		self.nearest = function(lat = 39.21333,lon = 9.11223) { // default values Cagliari
+		self.nearest = function(lat,lon) { 
 			cur_cos_lat = Math.cos(lat * Math.PI / 180);
 			cur_sin_lat = Math.sin(lat * Math.PI / 180);
 			cur_cos_lng = Math.cos(lon * Math.PI / 180);

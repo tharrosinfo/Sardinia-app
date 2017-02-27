@@ -148,7 +148,10 @@
 				});
 			},function(error){
 				console.log("Geo location error "+error.error.message);
-				MyItems.nearest().then(function(sites){
+				// default values Cagliari
+				$scope.mylat = 39.21333;
+				$scope.mylon = 9.11223;
+				MyItems.nearest($scope.mylat,$scope.mylon).then(function(sites){
 					$scope.sites = sites;
 					$scope.distance = function(distacos) { return (Math.acos(distacos) * 6371).toFixed(2)} ;
 					$scope.go = function ( path ) {$location.path( path );};
