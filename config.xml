@@ -17,6 +17,15 @@
 		<!-- iPad -->
 		<icon src="img/icon-76.png" gap:platform="ios" width="76" height="76" />
         <icon src="img/icon-76@2x.png" gap:platform="ios" width="152" height="152" />
+		<splash src="img/Default~iphone.png" width="320" height="480"/>
+		<splash src="img/Default@2x~iphone.png" width="640" height="960"/>
+		<splash src="img/Default-Portrait~ipad.png" width="768" height="1024"/>
+		<splash src="img/Default-Portrait@2x~ipad.png" width="1536" height="2048"/>
+		<splash src="img/Default-Landscape~ipad.png" width="1024" height="768"/>
+		<splash src="img/Default-Landscape@2x~ipad.png" width="2048" height="1536"/>
+		<splash src="img/Default-568h@2x~iphone.png" width="640" height="1136"/>
+		<splash src="img/Default-667h.png" width="750" height="1334"/>
+		<splash src="img/Default-736h.png" width="1242" height="2208"/>
 		<splash src="img/Default@2x~universal~anyany.png" />
 	 </platform>
  
