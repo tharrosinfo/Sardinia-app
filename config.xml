@@ -9,6 +9,7 @@
  
     <name>Tharros info Sardegna</name>
 	<icon src="icon.png" />
+	<splash src="splash.png" />
 	<platform name="ios">
 		<icon src="img/sardinia.png" />
 		<icon src="img/icon-60@3x.png" width="180" height="180" />
@@ -52,6 +53,7 @@
 	<preference name="exit-on-suspend" value="true" />
 	<preference name="StatusBarOverlaysWebView" value="false" />
 	<preference name="StatusBarBackgroundColor" value="#000000" />
+	<preference name="SplashScreen" value="splash" />
 	
 	<gap:plugin name="cordova-plugin-statusbar" source="npm" />
 	<gap:plugin name="cordova-plugin-splashscreen" source="npm" />
