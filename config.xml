@@ -2,8 +2,8 @@
 <widget xmlns       = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "sardinia.app"
-        versionCode = "19"
-        version     = "0.9.8">
+        versionCode = "20"
+        version     = "0.9.9">
 
     <preference name="phonegap-version" value="cli-6.5.0" />
  
@@ -34,7 +34,7 @@
         Discover Sardinia by Tharrosinfo
     </description>
  
-    <author href="http://www.tharros.info/" email="webmaster@tharros.info">
+    <author href="https://www.tharros.info/" email="webmaster@tharros.info">
         Timbert Kriek
     </author>
 	
@@ -51,12 +51,15 @@
 	<preference name="android-minSdkVersion" value="10" />
 	<preference name="AndroidPersistentFileLocation" value="Compatibility" />
 	<preference name="exit-on-suspend" value="true" />
-	<preference name="StatusBarOverlaysWebView" value="false" />
-	<preference name="StatusBarBackgroundColor" value="#000000" />
-	<preference name="SplashScreen" value="splash" />
+	<platform name="ios" >
+		<preference name="StatusBarOverlaysWebView" value="false" />
+		<preference name="StatusBarBackgroundColor" value="#000000" />
+		<preference name="SplashScreen" value="splash" />
+	</platform>
 	
 	<gap:plugin name="cordova-plugin-statusbar" source="npm" />
-	<gap:plugin name="cordova-plugin-splashscreen" source="npm" />
+	
+	<gap:plugin name="cordova-plugin-keyboard" source="npm" />
 	<gap:plugin name="cordova-plugin-whitelist" source="npm" />
 	<gap:plugin name="cordova-plugin-device" source="npm" />
 	<gap:plugin name="cordova-plugin-file" source="npm" />

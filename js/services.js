@@ -153,7 +153,7 @@
 						crossDomain: true,
 						dataType: "json",
 						data: { reg: "xN4p!t92Zy", app: 2, state: curstate.lastupdate},
-						url: 'http://www.tharros.info/checkapp.php'
+						url: 'https://www.tharros.info/checkapp.php'
 					}).then(function successCallback(response) {
 						// this callback will be called asynchronously
 						//e = JSON.stringify(response, null, 4)
@@ -170,7 +170,7 @@
 										crossDomain: true,
 										dataType: "json",
 										data: { reg: "xN4p!t92Zy", lng: lang, cache: noCache},
-										url: 'http://www.tharros.info/sitelist.php'
+										url: 'https://www.tharros.info/sitelist.php'
 									}).then(function successCallback(response) {
 										return self.update(response.data).then(function(){
 											// update mystate with current date
