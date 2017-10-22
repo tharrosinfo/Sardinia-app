@@ -1,6 +1,8 @@
 <!-- map.html -->
-
-	<div id="map-container">
+	
+	{{vm.platform}}
+	<div id="map-container" map-lazy-load="https://maps.google.com/maps/api/js"
+      map-lazy-load-params="{{vm.googleMapsUrl}}">
 		<ng-map id="ng-map" center="40.1100,8.9100" zoom="8">
 			<info-window id="cached" template="{{vm.template.cached}}"></info-window>
 			<marker ng-repeat="(id, site) in sites" id="{{id}}"

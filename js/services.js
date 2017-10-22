@@ -35,6 +35,23 @@
 		]
 	});
 	
+	TharrosApp.constant('GOOGLE_API', (function() {
+		var thiskey = "AIzaSyCOqz1QKx6jyq3Q94jABG4-4X2zU_FTpCA";
+		var thisplatform = "Windows";
+		if(typeof(device) !== 'undefined'){
+			if(device.platform == "Android"){
+				thiskey = "AIzaSyDxUhuwVOvnmJ64ahlSQU69F_5eRmGO7EY";
+			}else if(device.platform == "iOS"){
+				thiskey = "AIzaSyDxUhuwVOvnmJ64ahlSQU69F_5eRmGO7EY";
+			}
+			thisplatform = device.platform;
+		}
+		return {
+			APIKEY: thiskey,
+			PLATFORM: thisplatform
+		}
+	})());;
+	
 	TharrosApp.factory('db', function($q, DB_CONFIG) {
 	    var self = this;
 	    self.db = null;
