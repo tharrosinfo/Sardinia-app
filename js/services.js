@@ -38,7 +38,8 @@
 	TharrosApp.constant('GOOGLE_API', (function() {
 		var thiskey = "AIzaSyCOqz1QKx6jyq3Q94jABG4-4X2zU_FTpCA";
 		var thisplatform = "Windows";
-		if(typeof(device) !== 'undefined'){
+		//if(typeof(device) !== 'undefined'){
+		if(window.cordova){
 			if(device.platform == "Android"){
 				thiskey = "AIzaSyDxUhuwVOvnmJ64ahlSQU69F_5eRmGO7EY";
 			}else if(device.platform == "iOS"){
