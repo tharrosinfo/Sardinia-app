@@ -59,9 +59,8 @@
 	<script type="text/javascript">
 		angular.element(document).ready(function () {
 			if (window.cordova) {
-				console.log("Running in Cordova, will bootstrap AngularJS once 'deviceready' event fires.");
 				document.addEventListener('deviceready', function () {
-					console.log("Deviceready event has fired, bootstrapping AngularJS.");
+					alert("Deviceready event has fired, bootstrapping AngularJS.");
 					angular.bootstrap(document.body, ['TharrosApp']);
 				}, false);
 			} else {

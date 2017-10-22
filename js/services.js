@@ -39,12 +39,12 @@
 		var thiskey = "AIzaSyCOqz1QKx6jyq3Q94jABG4-4X2zU_FTpCA";
 		var thisplatform = "Windows";
 		if(typeof(window.device) !== 'undefined'){
-			if(window.device['platform'] == "Android"){
+			if(window.device.platform == "Android"){
 				thiskey = "AIzaSyDxUhuwVOvnmJ64ahlSQU69F_5eRmGO7EY";
-			}else if(window.device['platform'] == "iOS"){
+			}else if(window.device.platform == "iOS"){
 				thiskey = "AIzaSyDxUhuwVOvnmJ64ahlSQU69F_5eRmGO7EY";
 			}
-			thisplatform = window.device['platform'];
+			thisplatform = window.device.platform;
 		}
 		return {
 			APIKEY: thiskey,
