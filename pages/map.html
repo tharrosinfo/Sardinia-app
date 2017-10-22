@@ -1,0 +1,24 @@
+<!-- map.html -->
+
+	<div id="map-container">
+		<ng-map id="ng-map" center="40.1100,8.9100" zoom="8">
+			<info-window id="cached" template="{{vm.template.cached}}"></info-window>
+			<marker ng-repeat="(id, site) in sites" id="{{id}}"
+				position="{{site.coordGlat}},{{site.coordGlng}}"
+				title="{{site.name}}"
+				on-click="vm.showSite(event, id)"
+				icon="{url:'icons/marker2.png', scale: 10}">
+			</marker>
+		</ng-map>
+	</div>
+	
+	<script id="info.html" type="text/ng-template">
+		<div ng-non-bindable="">
+			<div class="infobox txtcenter txtbold">
+				<a href="#/detail/{{vm.site.id}}">
+				<img src="images/{{vm.site.image}}">
+				<p>{{vm.site.name}}</p>
+				</a>
+			</div>
+		</div>
+	</script>

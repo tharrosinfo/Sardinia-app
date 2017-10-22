@@ -8,8 +8,12 @@
 			<img src="img/loading.gif">
 		</p>
 		
+		<form class="form-inline">
+			<input ng-model="query" type="text" placeholder="{{ 'FILTER' | translate }}" autofocus>
+		</form>
+		
 		<ul class="mainlist">
-			<li ng-repeat="site in sites">
+			<li ng-repeat="site in sites | filter:query ">
 				<div ng-click="go('detail/'+ site.id)">
 				<img src="images/{{site.image}}" class="toleft">
 				<h2><a href="#/detail/{{site.id}}">{{site.name}}</a></h2>

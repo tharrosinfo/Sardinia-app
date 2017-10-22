@@ -1,6 +1,9 @@
-
+html {height:100%}
+body {height: 94%}
 header {position:fixed;top:0;left:0;right:0;z-index: 99999}
-#main {margin-top:80px}
+#main {margin-top:50px;height:100%}
+.text-center {margin-top: 80px}
+.modal-dialog {margin-top: 40px}
 h1 {font-size: 1.75em}
 .header:before {padding: 0px; padding-left: 1.5em; content:""; background-image: url(../img/sardinia.png);
 background-position: left center; background-repeat: no-repeat;background-size: 20px 20px;}
@@ -93,6 +96,8 @@ box-shadow: 0 1px 3px rgba(41,41,41,0.2);-webkit-border-radius: .6em;border-radi
 
 .toleft {float:left}
 .toright {float:right}
+.txtcenter {text-align: center}
+.txtbold {font-weight:600}
 .wid100 {max-width:455px !important; width: 100% !important;padding: 0px !important;margin-bottom: 10px;}
 .textbox, .infobox {padding-top: 10px}
 .infobox {background-color: #e4e4e4 !important}
@@ -100,4 +105,8 @@ box-shadow: 0 1px 3px rgba(41,41,41,0.2);-webkit-border-radius: .6em;border-radi
 .mainbtn {width: 25%; min-width: 150px; border: 1px solid #555;	margin: auto; color: #000; font-size: 15px;line-height: 1em;
      background: #ededed; background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ccc)); -webkit-appearance: none;-webkit-box-shadow: 1px 1px 1px #fff;
  	  -webkit-border-radius: 0.5em; padding: 0.5em 1em 0.5em 0.75em;}
+	  
+/* map */
+#ng-view, #ng-map {height: 100%}
+#map-container {height:100%; width: 100%}
 

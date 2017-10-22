@@ -11,6 +11,7 @@
 				<p>{{sites.place}} ({{sites.prov}})</p>
 				<p>{{sites.cat}}</p>
 				<p>{{siteCoords | convertDecimalToMin: siteLang}}</p>
+				<p>{{ 'DISTANCE' | translate }} <em>{{ distance(sites.distance_acos) }}</em> km</p>
 			</li>
 			<li>
 				<p class="toleft textbox">{{sites.description}} </p>
@@ -18,5 +19,8 @@
 			<li class="infobox">
 				<p ng-bind-html="infohtml"></p>
 		    </li>
+			<li>
+				<a href="https://www.tharros.info/" class="mainbtn">{{ 'VISIT' | translate }}</a>
+			</li>
 		</ul>
     </div>
