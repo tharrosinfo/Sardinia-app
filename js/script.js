@@ -1,7 +1,7 @@
 // script.js
 
     // create the module and name it TharrosApp
-    var TharrosApp = angular.module('TharrosApp', ['ngRoute','ui.bootstrap','ngGeolocation','angular-confirm','ngSanitize','pascalprecht.translate'], function($httpProvider) {
+    var TharrosApp = angular.module('TharrosApp', ['ngRoute','ui.bootstrap','ngGeolocation','angular-confirm','ngSanitize','pascalprecht.translate','ngMap'], function($httpProvider) {
 		  // Use x-www-form-urlencoded Content-Type
 		  $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 
@@ -67,6 +67,12 @@
 				templateUrl : 'pages/sites-detail.html',
                 controller  : 'detailController'
 			})
+			// route for the about page
+            .when('/map', {
+                templateUrl : 'pages/map.html',
+                controller  : 'mapController as vm'
+            })
+			
             // route for the about page
             .when('/about', {
                 templateUrl : 'pages/about.html',
@@ -84,6 +90,7 @@
 	TharrosApp.config(function($translateProvider) {
 		$translateProvider.translations('en', {
 			SITES: 'Sites and Events',
+			MAP: 'Map',
 			HELP: 'Help/About',
 			CONTACT: 'Contact',
 			LIST: 'A list of Sites and Events to visit',
@@ -94,10 +101,12 @@
 			DISTANCE: 'Distance',
 			UPDATE_MESSAGE: 'Do you want to update the list now?',
 			UPDATE_TITLE: 'Update',
-			NOK: 'No'
+			NOK: 'No',
+			FILTER: 'Filter by'
 		})
 		.translations('nl', {
 			SITES: 'Sites en Musea',
+			MAP: 'Kaart',
 			HELP: 'Help/Over',
 			CONTACT: 'Contact',
 			LIST: 'Lijst van bezienswaardigheden en evenementen',
@@ -108,10 +117,12 @@
 			DISTANCE: 'Afstand',
 			UPDATE_MESSAGE: 'Wil je nu de lijst bijwerken?',
 			UPDATE_TITLE: 'Bijwerken',
-			NOK: 'Nee'
+			NOK: 'Nee',
+			FILTER: 'Filter op'
 		})
 		.translations('it', {
 			SITES: 'Siti e Eventi',
+			MAP: 'Mappa',
 			HELP: 'Aiuto/Info',
 			CONTACT: 'Contatta',
 			LIST: 'Elenco dei siti e degli eventi da visitare',
@@ -122,7 +133,8 @@
 			DISTANCE: 'Distanza',
 			UPDATE_MESSAGE: 'Vuoi aggiornare la lista adesso?',
 			UPDATE_TITLE: 'Aggiornare',
-			NOK: 'No'
+			NOK: 'No',
+			FILTER: 'Filtra su'
 		});
 		$translateProvider.preferredLanguage('en');
 		$translateProvider.useSanitizeValueStrategy('escape');
@@ -163,23 +175,45 @@
 	
 	TharrosApp.controller('detailController', function($geolocation,$sce,$rootScope,$scope, MyItems, myVars, $routeParams) {
 		$rootScope.siteinfo = true;
-		//$geolocation.getCurrentPosition({
-		//	timeout: 60000
-		//}).then(function(position) {
-			//$scope.coords = position.coords;
-			//$scope.mylat = $scope.coords.latitude;
-			//$scope.mylon = $scope.coords.longitude;
-			$scope.sites = [];
-			MyItems.getById($routeParams.id).then(function(sites){
+		$scope.sites = [];
+		// geolocation
+		$geolocation.getCurrentPosition({
+			timeout: 60000
+		}).then(function(position) {
+			$scope.coords = position.coords;
+			$scope.mylat = $scope.coords.latitude;
+			$scope.mylon = $scope.coords.longitude;
+			MyItems.getById($routeParams.id,$scope.mylat,$scope.mylon).then(function(sites){
 				console.log(myVars.lang + "scope getbyId");
 				$scope.sites = sites;
 				$scope.siteCoords = $scope.sites.coordGlat+','+$scope.sites.coordGlng;
 				$scope.siteLang = myVars.lang;
 				$scope.infohtml = $sce.trustAsHtml(sites.info) ;
-				//$scope.distance = function(distacos) { return (Math.acos(distacos) * 6371).toFixed(2)} ;
+				$scope.distance = function(distacos) { return (Math.acos(distacos) * 6371).toFixed(2)} ;
 			});
-		//});
-    });
+		});
+	});
+	
+	TharrosApp.controller('mapController', function($compile,NgMap,$geolocation,$sce,$rootScope,$scope, MyItems, myVars, $routeParams) {
+		var vm = this;
+		$scope.sites = [];
+		NgMap.getMap().then(function(map) {
+			vm.map = map;
+			MyItems.all().then(function(sites){
+				$scope.sites = sites;
+				vm.sites = sites;
+				$scope.siteLang = myVars.lang;
+			});
+			console.log(map.getCenter());
+		});
+		vm.template = {
+			cached: 'info.html',
+		};
+		vm.showSite = function(evt, siteId) {
+			vm.site = vm.sites[siteId];
+			vm.map.showInfoWindow('cached', this);
+		};
+	});
 
     TharrosApp.controller('aboutController', function($scope, myVars) {
 		$scope.shownl = false;
@@ -236,11 +270,8 @@
 	        });
 	    }
 		
-		
-		
 	});
 	
-		
 	TharrosApp.run(function($rootScope) {
 	    document.addEventListener("keyup", function(e) {
 	        if (e.keyCode === 27)
@@ -361,6 +392,8 @@
 		}
 		
 	});
+	
+	// filter return link to tharros.info ViewGallery or ViewSites
 	
 	
 	

@@ -10,6 +10,8 @@
 					{name: 'place', type: 'varchar(150)'}, 
 					{name: 'prov', type: 'varchar(2)'},
 					{name: 'name', type: 'varchar(50)'},
+					//{name: 'gallery', type: 'integer'},
+					//{name: 'sites', type: 'integer'},
 					{name: 'coordGlng', type: 'float(8,5)'},
 					{name: 'coordGlat', type: 'float(8,5)'},
 					{name: 'cos_lat', type: 'float(17,15)'},
@@ -18,7 +20,7 @@
 					{name: 'sin_lng', type: 'float(17,15)'},
 					{name: 'description', type: 'longtext'},
 					{name: 'info', type: 'longtext'}
-					// add fields gallery, sites
+					// add fields gallery, sites, icon
 				]
 			},
 			{
@@ -36,7 +38,7 @@
 	TharrosApp.factory('db', function($q, DB_CONFIG) {
 	    var self = this;
 	    self.db = null;
-	
+		
 	    self.init = function() {
 	        self.db = window.openDatabase(DB_CONFIG.name, '1.0', 'database', 1000000);
 			
@@ -47,8 +49,8 @@
 			//var sqldrop = 'DROP TABLE sites';
 			//self.query(sqldrop);
 			//console.log('sites deleted');
-	
-	        angular.forEach(DB_CONFIG.tables, function(table) {
+			
+			angular.forEach(DB_CONFIG.tables, function(table) {
 	            var columns = [];
 	
 	            angular.forEach(table.columns, function(column) {
@@ -90,8 +92,8 @@
 	    self.fetch = function(result) {
 	        return result.rows.item(0);
 	    };
-	
-	    return self;
+		
+		return self;
 	});
 	
 	TharrosApp.factory('MyItems', function(db) {
@@ -119,14 +121,19 @@
 	        });
 	    };
 	    
-	    self.getById = function(id) {
-	        return db.query('SELECT * FROM sites WHERE id = ?', [id])
+	    self.getById = function(id,lat,lon) {
+			cur_cos_lat = Math.cos(lat * Math.PI / 180);
+			cur_sin_lat = Math.sin(lat * Math.PI / 180);
+			cur_cos_lng = Math.cos(lon * Math.PI / 180);
+			cur_sin_lng = Math.sin(lon * Math.PI / 180);
+	        return db.query('SELECT *,(sin_lat * ? + cos_lat * ? * (sin_lng * ? + cos_lng * ?)) AS "distance_acos" FROM sites WHERE id = ?', [cur_sin_lat,cur_cos_lat,cur_sin_lng,cur_cos_lng,id])
 	        .then(function(result){
 	            return db.fetch(result);
 	        });
 	    };
 		
 		self.checkstate = function($http, $filter, $confirm, $translate, lang) {
+			console.log("db version checked: "+db.db.version);
 			return db.query('SELECT lastupdate,lastcheck FROM mystate WHERE id=1')
 	        .then(function(result){
 				//e = JSON.stringify(result, null, 4);
@@ -182,8 +189,9 @@
 									},function errorCallback(response) {
 										console.log("failure update");
 									});
-								});
+								},function(){console.log("Cancel pressed");});
 							});
+							
 						}else{
 							var check = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
 							console.log("No update needed. Update time changed to " + check);
@@ -202,24 +210,48 @@
 		};
 		
 		self.changestate = function(state,check) {
-	        return db.query('INSERT OR REPLACE INTO mystate (id,lastupdate,lastcheck,version) VALUES (?,?,?,?)',[1,state,check,"0.9.8"])
+	        return db.query('INSERT OR REPLACE INTO mystate (id,lastupdate,lastcheck,version) VALUES (?,?,?,?)',[1,state,check,"1.0.0"])
 	        .then(function(result){
-				console.log('Version 0.9.8 updated to ' + state + 'last check: ' + check);
+				console.log('Version 1.0.0 updated to ' + state + 'last check: ' + check);
 	        });
 	    };
 		
 		self.update = function(sites){
-			// if version 0.9.8 then add columns 
-			
-			// if version 0.9.8 run query else run new query
-			var sql = "INSERT OR REPLACE INTO sites " +
-		            "(id,cat,image,place,prov,name,coordGlng,coordGlat,sin_lat,cos_lat,sin_lng,cos_lng,description,info) " +
-		            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			console.log("db version: "+db.db.version);
+			if(db.db.version == "1.0"){
+				//db.changeVersion("", "1", function(t){
+				//	t.executeSql("create table ...");
+				//});
+				console.log("db version checked");
+			}
+			// count fields: if no. of fields 14 run sql x else run sql y
 			var l = sites.length;
+			var sql = "INSERT OR REPLACE INTO sites " +
+				"(id,cat,image,place,prov,name,coordGlng,coordGlat,sin_lat,cos_lat,sin_lng,cos_lng,description,info) " +
+				"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			for (var i = 0; i < l; i++) {
 				e = sites[i];
 				db.query(sql, [e.id, e.cat, e.image, e.place, e.prov, e.name, e.coordGlng, e.coordGlat, e.sin_lat, e.cos_lat, e.sin_lng, e.cos_lng, e.description,e.info]);
 			};
+			
+			//if(l==14){
+			//	var sql = "INSERT OR REPLACE INTO sites " +
+			//			"(id,cat,image,place,prov,name,coordGlng,coordGlat,sin_lat,cos_lat,sin_lng,cos_lng,description,info) " +
+			//			"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			//	for (var i = 0; i < l; i++) {
+			//		e = sites[i];
+			//		db.query(sql, [e.id, e.cat, e.image, e.place, e.prov, e.name, 0, 0, e.coordGlng, e.coordGlat, e.sin_lat, e.cos_lat, e.sin_lng, e.cos_lng, e.description,e.info]);
+			//	};
+			//}
+			//if(l==16){
+			//	var sql = "INSERT OR REPLACE INTO sites " +
+			//	        "(id,cat,image,place,prov,name,gallery,sites,coordGlng,coordGlat,sin_lat,cos_lat,sin_lng,cos_lng,description,info) " +
+			//	        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			//	for (var i = 0; i < l; i++) {
+			//		e = sites[i];
+			//		db.query(sql, [e.id, e.cat, e.image, e.place, e.prov, e.name, e.gallery, e.sites, e.coordGlng, e.coordGlat, e.sin_lat, e.cos_lat, e.sin_lng, e.cos_lng, e.description,e.info]);
+			//	};
+			//}
 			return self.all();
 		};
 	    
