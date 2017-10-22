@@ -194,7 +194,7 @@
 		});
 	});
 	
-	TharrosApp.controller('mapController', function($compile,NgMap,$geolocation,$sce,$rootScope,$scope, MyItems, myVars, $routeParams) {
+	TharrosApp.controller('mapController', function($compile,NgMap,$geolocation,$sce,$rootScope,$scope, MyItems, myVars, $routeParams,GOOGLE_API) {
 		var vm = this;
 		$scope.sites = [];
 		NgMap.getMap().then(function(map) {
@@ -206,6 +206,9 @@
 			});
 			console.log(map.getCenter());
 		});
+		vm.googleMapsUrl = 'https://maps.google.com/maps/api/js?key='+GOOGLE_API.APIKEY; // windows
+		vm.platform = GOOGLE_API.PLATFORM;
+		// https://maps.google.com/maps/api/js?key=AIzaSyDxUhuwVOvnmJ64ahlSQU69F_5eRmGO7EY // android
 		vm.template = {
 			cached: 'info.html',
 		};
