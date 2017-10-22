@@ -206,9 +206,8 @@
 			});
 			console.log(map.getCenter());
 		});
-		vm.googleMapsUrl = 'https://maps.google.com/maps/api/js?key='+GOOGLE_API.APIKEY; // windows
+		vm.googleMapsUrl = 'https://maps.google.com/maps/api/js?key='+GOOGLE_API.APIKEY; 
 		vm.platform = GOOGLE_API.PLATFORM;
-		// https://maps.google.com/maps/api/js?key=AIzaSyDxUhuwVOvnmJ64ahlSQU69F_5eRmGO7EY // android
 		vm.template = {
 			cached: 'info.html',
 		};
