@@ -60,12 +60,12 @@
 		angular.element(document).ready(function () {
 			if (window.cordova) {
 				document.addEventListener('deviceready', function () {
-					alert("Deviceready event has fired, bootstrapping AngularJS.");
-					alert(device.platform);
+					window.device = device.platform;
 					angular.bootstrap(document.body, ['TharrosApp']);
 				}, false);
 			} else {
 				console.log("Running in browser, bootstrapping AngularJS now.");
+				window.device = "Browser" ;
 				angular.bootstrap(document.body, ['TharrosApp']);
 			}
 		});

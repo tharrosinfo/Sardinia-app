@@ -43,7 +43,7 @@
 
 		  // Override $http service's default transformRequest
 		  $httpProvider.defaults.transformRequest = [function(data) {
-			return angular.isObject(data) && String(data) !== '[object File]' ? param(data) : data;
+				return angular.isObject(data) && String(data) !== '[object File]' ? param(data) : data;
 		  }];
 	});
 	
@@ -194,7 +194,7 @@
 		});
 	});
 	
-	TharrosApp.controller('mapController', function($compile,NgMap,$geolocation,$sce,$rootScope,$scope, MyItems, myVars, $routeParams,GOOGLE_API) {
+	TharrosApp.controller('mapController', function($compile,NgMap,$geolocation,$sce,$rootScope,$scope, MyItems, myVars, $routeParams,mapapi) {
 		var vm = this;
 		$scope.sites = [];
 		NgMap.getMap().then(function(map) {
@@ -206,8 +206,7 @@
 			});
 			console.log(map.getCenter());
 		});
-		vm.googleMapsUrl = 'https://maps.google.com/maps/api/js?key='+GOOGLE_API.APIKEY; 
-		vm.platform = GOOGLE_API.PLATFORM;
+		vm.googleMapsUrl = mapapi.init(window.device); 
 		vm.template = {
 			cached: 'info.html',
 		};
