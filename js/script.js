@@ -394,9 +394,3 @@
 		
 	});
 	
-	// filter return link to tharros.info ViewGallery or ViewSites
-	
-	
-	
-	
-   
