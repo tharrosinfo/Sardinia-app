@@ -41,13 +41,14 @@
 		self.init = function(platform) {
 			var thiskey = "AIzaSyCOqz1QKx6jyq3Q94jABG4-4X2zU_FTpCA";
 			var thisurl = 'https://maps.google.com/maps/api/js?key=';
-			alert(platform);
 			if(platform == 'Android'){
+				thiskey = "AIzaSyDxUhuwVOvnmJ64ahlSQU69F_5eRmGO7EY";
+			}
+			if(platform == 'iOS'){
 				thiskey = "AIzaSyDxUhuwVOvnmJ64ahlSQU69F_5eRmGO7EY";
 			}
 			return thisurl+thiskey;
 		};
-		
 		return self;
 	});
 	
@@ -226,9 +227,9 @@
 		};
 		
 		self.changestate = function(state,check) {
-	        return db.query('INSERT OR REPLACE INTO mystate (id,lastupdate,lastcheck,version) VALUES (?,?,?,?)',[1,state,check,"1.0.1"])
+	        return db.query('INSERT OR REPLACE INTO mystate (id,lastupdate,lastcheck,version) VALUES (?,?,?,?)',[1,state,check,"1.0.2"])
 	        .then(function(result){
-				console.log('Version 1.0.1 updated to ' + state + 'last check: ' + check);
+				console.log('Version 1.0.2 updated to ' + state + 'last check: ' + check);
 	        });
 	    };
 		
