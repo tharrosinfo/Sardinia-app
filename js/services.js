@@ -35,22 +35,21 @@
 		]
 	});
 	
-	TharrosApp.constant('GOOGLE_API', (function() {
-		var thiskey = "AIzaSyCOqz1QKx6jyq3Q94jABG4-4X2zU_FTpCA";
-		var thisplatform = "Windows";
-		if(typeof(window.device) !== 'undefined'){
-			if(window.device.platform == "Android"){
-				thiskey = "AIzaSyDxUhuwVOvnmJ64ahlSQU69F_5eRmGO7EY";
-			}else if(window.device.platform == "iOS"){
+	TharrosApp.factory('mapapi', function() {
+		var self = this;
+		
+		self.init = function(platform) {
+			var thiskey = "AIzaSyCOqz1QKx6jyq3Q94jABG4-4X2zU_FTpCA";
+			var thisurl = 'https://maps.google.com/maps/api/js?key=';
+			alert(platform);
+			if(platform == 'Android'){
 				thiskey = "AIzaSyDxUhuwVOvnmJ64ahlSQU69F_5eRmGO7EY";
 			}
-			thisplatform = window.device.platform;
-		}
-		return {
-			APIKEY: thiskey,
-			PLATFORM: thisplatform
-		}
-	})());;
+			return thisurl+thiskey;
+		};
+		
+		return self;
+	});
 	
 	TharrosApp.factory('db', function($q, DB_CONFIG) {
 	    var self = this;
