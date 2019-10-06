@@ -4,9 +4,9 @@
 		xmlns:android = "http://schemas.android.com/apk/res/android"
         id          = "sardinia.app"
         versionCode = "26"
-        version     = "1.1.1">
+        version     = "1.1.2">
 
-    <preference name="phonegap-version" value="cli-8.0.0" />
+    <preference name="phonegap-version" value="cli-9.0.0" />
  
     <name>Tharros info Sardegna</name>
 	<icon src="icon.png" />
@@ -49,7 +49,6 @@
 	<gap:platform name="android" />
 	<gap:platform name="ios" />
 
-	<preference name="android-minSdkVersion" value="16" />
 	<preference name="AndroidPersistentFileLocation" value="Compatibility" />
 	<preference name="exit-on-suspend" value="true" />
 	<platform name="ios" >
