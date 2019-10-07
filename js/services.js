@@ -39,10 +39,10 @@
 		var self = this;
 		
 		self.init = function(platform) {
-			var thiskey = "";
+			var thiskey = "AIzaSyB0HYV3pBO5kVgdjfG8U7jb8O28EuadSho";
 			var thisurl = 'https://maps.google.com/maps/api/js?key=';
 			if(platform == 'Android'){
-				thiskey = "";
+				thiskey = "AIzaSyB0HYV3pBO5kVgdjfG8U7jb8O28EuadSho";
 			}
 			if(platform == 'iOS'){
 				thiskey = "";
@@ -153,7 +153,6 @@
 			console.log("db version checked: "+db.db.version);
 			return db.query('SELECT lastupdate,lastcheck FROM mystate WHERE id=1')
 	        .then(function(result){
-				//e = JSON.stringify(result, null, 4);
 				console.log('Result rows lenght :'+result.rows.length);
 				if(result.rows.length > 0){
 					curstate = db.fetch(result);
@@ -180,8 +179,8 @@
 						url: 'https://www.tharros.info/checkapp.php'
 					}).then(function successCallback(response) {
 						// this callback will be called asynchronously
-						//e = JSON.stringify(response, null, 4)
 						console.log("success check " + response.data[0].update);
+						// additional response data
 						if (response.data[0].update === 0){
 							// ask user if he wants to update
 							return $translate(['UPDATE_MESSAGE', 'UPDATE_TITLE', 'NOK']).then(function (translations){
@@ -196,7 +195,7 @@
 										data: { reg: "xN4p!t92Zy", lng: lang, cache: noCache},
 										url: 'https://www.tharros.info/sitelist.php'
 									}).then(function successCallback(response) {
-										return self.update(response.data).then(function(){
+										return self.updatelist(response.data,false).then(function(){
 											// update mystate with current date
 											console.log("success update");
 											state = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
@@ -227,22 +226,20 @@
 		};
 		
 		self.changestate = function(state,check) {
-	        return db.query('INSERT OR REPLACE INTO mystate (id,lastupdate,lastcheck,version) VALUES (?,?,?,?)',[1,state,check,"1.1.3"])
+	        return db.query('INSERT OR REPLACE INTO mystate (id,lastupdate,lastcheck,version) VALUES (?,?,?,?)',[1,state,check,"1.1.4"])
 	        .then(function(result){
-				console.log('Version 1.1.3 updated to ' + state + 'last check: ' + check);
+				console.log('Version 1.1.4 updated to ' + state + 'last check: ' + check);
 	        });
 	    };
 		
-		self.update = function(sites){
-			console.log("db version: "+db.db.version);
-			if(db.db.version == "1.0"){
-				//db.changeVersion("", "1", function(t){
-				//	t.executeSql("create table ...");
-				//});
-				console.log("db version checked");
+		self.updatelist = function(sites,dbupdatescheme){
+			console.log("Update database scheme: "+dbupdatescheme);
+			if(dbupdatescheme == true){
+				// add code
+				console.log("db scheme will be updated");
+			}else{
+				console.log("db scheme will not be updated");
 			}
-			// count fields: if no. of fields 14 run sql x else run sql y
-			var l = sites.length;
 			var sql = "INSERT OR REPLACE INTO sites " +
 				"(id,cat,image,place,prov,name,coordGlng,coordGlat,sin_lat,cos_lat,sin_lng,cos_lng,description,info) " +
 				"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -251,7 +248,6 @@
 				db.query(sql, [e.id, e.cat, e.image, e.place, e.prov, e.name, e.coordGlng, e.coordGlat, e.sin_lat, e.cos_lat, e.sin_lng, e.cos_lng, e.description,e.info]);
 			};
 			
-			//if(l==14){
 			//	var sql = "INSERT OR REPLACE INTO sites " +
 			//			"(id,cat,image,place,prov,name,coordGlng,coordGlat,sin_lat,cos_lat,sin_lng,cos_lng,description,info) " +
 			//			"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -259,8 +255,6 @@
 			//		e = sites[i];
 			//		db.query(sql, [e.id, e.cat, e.image, e.place, e.prov, e.name, 0, 0, e.coordGlng, e.coordGlat, e.sin_lat, e.cos_lat, e.sin_lng, e.cos_lng, e.description,e.info]);
 			//	};
-			//}
-			//if(l==16){
 			//	var sql = "INSERT OR REPLACE INTO sites " +
 			//	        "(id,cat,image,place,prov,name,gallery,sites,coordGlng,coordGlat,sin_lat,cos_lat,sin_lng,cos_lng,description,info) " +
 			//	        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -268,7 +262,7 @@
 			//		e = sites[i];
 			//		db.query(sql, [e.id, e.cat, e.image, e.place, e.prov, e.name, e.gallery, e.sites, e.coordGlng, e.coordGlat, e.sin_lat, e.cos_lat, e.sin_lng, e.cos_lng, e.description,e.info]);
 			//	};
-			//}
+			
 			return self.all();
 		};
 	    
