@@ -39,13 +39,13 @@
 		var self = this;
 		
 		self.init = function(platform) {
-			var thiskey = "AIzaSyCOqz1QKx6jyq3Q94jABG4-4X2zU_FTpCA";
+			var thiskey = "";
 			var thisurl = 'https://maps.google.com/maps/api/js?key=';
 			if(platform == 'Android'){
-				thiskey = "AIzaSyDxUhuwVOvnmJ64ahlSQU69F_5eRmGO7EY";
+				thiskey = "";
 			}
 			if(platform == 'iOS'){
-				thiskey = "AIzaSyDxUhuwVOvnmJ64ahlSQU69F_5eRmGO7EY";
+				thiskey = "";
 			}
 			return thisurl+thiskey;
 		};
