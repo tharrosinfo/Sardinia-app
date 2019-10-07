@@ -184,7 +184,6 @@
 			$scope.mylat = $scope.coords.latitude;
 			$scope.mylon = $scope.coords.longitude;
 			MyItems.getById($routeParams.id,$scope.mylat,$scope.mylon).then(function(sites){
-				console.log(myVars.lang + "scope getbyId");
 				$scope.sites = sites;
 				$scope.siteCoords = $scope.sites.coordGlat+','+$scope.sites.coordGlng;
 				$scope.siteLang = myVars.lang;
@@ -204,7 +203,7 @@
 				vm.sites = sites;
 				$scope.siteLang = myVars.lang;
 			});
-			console.log(map.getCenter());
+			alert(window.location.href); // debug
 		});
 		vm.googleMapsUrl = mapapi.init(window.device); 
 		vm.template = {
