@@ -203,7 +203,6 @@
 				vm.sites = sites;
 				$scope.siteLang = myVars.lang;
 			});
-			alert(window.location.href); // debug
 		});
 		vm.googleMapsUrl = mapapi.init(window.device); 
 		vm.template = {
