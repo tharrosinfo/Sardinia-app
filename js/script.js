@@ -1,7 +1,7 @@
 // script.js
 
-    // create the module and name it TharrosApp
-    var TharrosApp = angular.module('TharrosApp', ['ngRoute','ui.bootstrap','ngGeolocation','angular-confirm','ngSanitize','pascalprecht.translate','ngMap'], function($httpProvider) {
+    // create the module and name it TharrosApp - ,'ngSanitize'
+    var TharrosApp = angular.module('TharrosApp', ['ngRoute','ui.bootstrap','pascalprecht.translate','ngGeolocation','angular-confirm','ngMap'], function($httpProvider) {
 		  // Use x-www-form-urlencoded Content-Type
 		  $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 
@@ -48,37 +48,51 @@
 	});
 	
 	TharrosApp.value('myVars', {
-		lang:(navigator.language) ? navigator.language : navigator.userLanguage
+		lang:(navigator.language) ? navigator.language : navigator.userLanguage,
 		//lang: 'it' // en , it , nl
+		mapuri: 'https://maps.google.com/maps/api/js?key=',
+		mapzoom: 8,
+		mappoint: "40.1100,8.9100",
+		thisAuth: 'xN4p!t92Zy',
+		thisApp: 'sardinia.app',
+		thisUrl: 'https://www.tharros.info/'
+		//thisUrl: 'http://localhost/tst/tharros.info/'
+		
+	});
+	
+	TharrosApp.config(function($httpProvider) {
+		//Enable cross domain calls
+		$httpProvider.defaults.useXDomain = true;
 	});
 	
 	// configure our routes
     TharrosApp.config(function($routeProvider) {
-        $routeProvider
+		$routeProvider
 
             // route for the home page
             .when('/', {
                 templateUrl : 'pages/home.html',
                 controller  : 'mainController'
             })
-			
 			// route for the sites details page
 			.when('/detail/:id', {
 				templateUrl : 'pages/sites-detail.html',
                 controller  : 'detailController'
 			})
-			// route for the about page
+			// route for the map page
             .when('/map', {
                 templateUrl : 'pages/map.html',
-                controller  : 'mapController as vm'
+                controller  : 'mapController as vm',
+				resolve		: {	myString: ['appdata','myVars', function(appdata,myVars) {
+									return appdata.getdata(myVars.lang,myVars.thisUrl,'map',2,myVars.thisAuth,myVars.thisApp);
+								}]
+							  }
             })
-			
-            // route for the about page
+			// route for the about page
             .when('/about', {
                 templateUrl : 'pages/about.html',
                 controller  : 'aboutController'
             })
-
             // route for the contact page
             .when('/contact', {
                 templateUrl : 'pages/contact.html',
@@ -141,9 +155,11 @@
 	});
 	
 	// create the controller and inject Angular's $scope
-    TharrosApp.controller('mainController', function($geolocation, $rootScope, $scope, $http, $filter, $confirm, $translate, $location, MyItems, myVars) {
+    TharrosApp.controller('mainController', function($geolocation, $rootScope, $scope, $http, $filter, $confirm, $translate, $location, MyItems, myVars, myMap) {
 		$rootScope.siteinfo = false;
 		$scope.dataLoaded = false ;
+		$scope.siteCoords = "40.1100,8.9100";
+		myMap.setmap(8,$scope.siteCoords);
 		$translate.use((myVars.lang).split("-")[0]); //(myVars.lang).split("-")[0]
 		MyItems.checkstate($http,$filter,$confirm,$translate,myVars.lang).then(function() {
 			$geolocation.getCurrentPosition({
@@ -173,7 +189,7 @@
 		});
 	});
 	
-	TharrosApp.controller('detailController', function($geolocation,$sce,$rootScope,$scope, MyItems, myVars, $routeParams) {
+	TharrosApp.controller('detailController', function($geolocation,$sce,$rootScope,$scope, MyItems, myVars, myMap,$routeParams) {
 		$rootScope.siteinfo = true;
 		$scope.sites = [];
 		// geolocation
@@ -189,13 +205,17 @@
 				$scope.siteLang = myVars.lang;
 				$scope.infohtml = $sce.trustAsHtml(sites.info) ;
 				$scope.distance = function(distacos) { return (Math.acos(distacos) * 6371).toFixed(2)} ;
+				myMap.setmap(12,$scope.siteCoords);
 			});
 		});
 	});
 	
-	TharrosApp.controller('mapController', function($compile,NgMap,$geolocation,$sce,$rootScope,$scope, MyItems, myVars, $routeParams,mapapi) {
-		var vm = this;
+	TharrosApp.controller('mapController', function($compile,NgMap,$geolocation,$sce,$scope,MyItems,myVars,myString) {
 		$scope.sites = [];
+		var vm = this;
+		vm.googleMapsUrl = myVars.mapuri + myString[0].gmak;
+		vm.MapZoom = myVars.mapzoom;
+		vm.MapCenter = myVars.mappoint;
 		NgMap.getMap().then(function(map) {
 			vm.map = map;
 			MyItems.all().then(function(sites){
@@ -204,7 +224,7 @@
 				$scope.siteLang = myVars.lang;
 			});
 		});
-		vm.googleMapsUrl = mapapi.init(window.device); 
+			
 		vm.template = {
 			cached: 'info.html',
 		};
@@ -240,8 +260,8 @@
 		}
 	});
 	
-	TharrosApp.controller("indexController", function($scope, $rootScope, myVars) {
-		
+	TharrosApp.controller("indexController", function($scope, $rootScope ) {
+				
 	    $scope.leftVisible = false;
 	    $scope.rightVisible = false;
 	

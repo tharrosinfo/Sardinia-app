@@ -2,7 +2,7 @@
 	
 	<div id="map-container" map-lazy-load="https://maps.google.com/maps/api/js"
       map-lazy-load-params="{{vm.googleMapsUrl}}">
-		<ng-map id="ng-map" center="40.1100,8.9100" zoom="8">
+		<ng-map id="ng-map" center="{{vm.MapCenter}}" zoom="{{vm.MapZoom}}">
 			<info-window id="cached" template="{{vm.template.cached}}"></info-window>
 			<marker ng-repeat="(id, site) in sites" id="{{id}}"
 				position="{{site.coordGlat}},{{site.coordGlng}}"
@@ -16,7 +16,7 @@
 	<script id="info.html" type="text/ng-template">
 		<div ng-non-bindable="">
 			<div class="infobox txtcenter txtbold txtlarge">
-				<a href="#/detail/{{vm.site.id}}">
+				<a href="#!/detail/{{vm.site.id}}">
 				<img src="images/{{vm.site.image}}">
 				<p>{{vm.site.name}}</p>
 				</a>

@@ -35,22 +35,41 @@
 		]
 	});
 	
-	TharrosApp.factory('mapapi', function() {
+	TharrosApp.factory('appdata', ['$http',function($http) {
 		var self = this;
 		
-		self.init = function(platform) {
-			var thiskey = "AIzaSyB0HYV3pBO5kVgdjfG8U7jb8O28EuadSho";
-			var thisurl = 'https://maps.google.com/maps/api/js?key=';
-			if(platform == 'Android'){
-				thiskey = "AIzaSyB0HYV3pBO5kVgdjfG8U7jb8O28EuadSho";
-			}
-			if(platform == 'iOS'){
-				thiskey = "";
-			}
-			return thisurl+thiskey;
+		self.getdata = function(language,url,module,id,auth,thisapp ) {
+			var uri = url+'api/website/'+language+'/'+module+'/'+id ; 
+			// url part variable from config
+			return $http({
+				method: 'GET',
+				headers: ({'Content-Type':'application/x-www-form-urlencoded','X-Authorization':'Basic '+auth+'!','Domain':thisapp}),
+				url: uri
+			}).then(function successCallback(response) {
+				// this callback will be called asynchronously
+				console.log("success check");
+				return response.data ;
+			}, function errorCallback(response) {
+				// called asynchronously if an error occurs
+				console.log("failure check");
+				//console.log(response.data);
+				return ;
+			});
 		};
+		
 		return self;
-	});
+	}]);
+	
+	TharrosApp.factory('myMap', ['myVars',function(myVars) {
+		var self = this;
+		
+		self.setmap = function(zoom,point){
+			myVars.mapzoom = zoom;
+			myVars.mappoint = point;
+		};
+		
+		return self;
+	}]);	
 	
 	TharrosApp.factory('db', function($q, DB_CONFIG) {
 	    var self = this;
@@ -226,9 +245,9 @@
 		};
 		
 		self.changestate = function(state,check) {
-	        return db.query('INSERT OR REPLACE INTO mystate (id,lastupdate,lastcheck,version) VALUES (?,?,?,?)',[1,state,check,"1.1.4"])
+	        return db.query('INSERT OR REPLACE INTO mystate (id,lastupdate,lastcheck,version) VALUES (?,?,?,?)',[1,state,check,"1.2.0"])
 	        .then(function(result){
-				console.log('Version 1.1.4 updated to ' + state + 'last check: ' + check);
+				console.log('Version 1.2.0 updated to ' + state + 'last check: ' + check);
 	        });
 	    };
 		

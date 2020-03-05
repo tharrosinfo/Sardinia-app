@@ -3,8 +3,8 @@
         xmlns:gap   = "http://phonegap.com/ns/1.0"
 		xmlns:android = "http://schemas.android.com/apk/res/android"
         id          = "sardinia.app"
-        versionCode = "26"
-        version     = "1.1.4">
+        versionCode = "27"
+        version     = "1.2.0">
 
     <preference name="phonegap-version" value="cli-9.0.0" />
  
