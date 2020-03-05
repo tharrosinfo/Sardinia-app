@@ -7,10 +7,13 @@
 		<ul class="mainlist">
 			<li>
 				<img src="images/{{sites.image}}" class="wid100">
-				<h2>{{sites.name}}</h2>
 				<p>{{sites.place}} ({{sites.prov}})</p>
 				<p>{{sites.cat}}</p>
-				<p>{{siteCoords | convertDecimalToMin: siteLang}}</p>
+			</li>
+			<li>
+				<p><a href="#!/map" >{{siteCoords | convertDecimalToMin: siteLang}}</a></p>
+			</li>
+			<li>
 				<p>{{ 'DISTANCE' | translate }} <em>{{ distance(sites.distance_acos) }}</em> km</p>
 			</li>
 			<li>
@@ -20,7 +23,7 @@
 				<p ng-bind-html="infohtml"></p>
 		    </li>
 			<li>
-				<a href="https://www.tharros.info/" class="mainbtn">{{ 'VISIT' | translate }}</a>
+				<a href="https://www.tharros.info/" class="btn btn-primary btn-lg" role="button">{{ 'VISIT' | translate }}</a>
 			</li>
 		</ul>
     </div>
