@@ -245,9 +245,9 @@
 		};
 		
 		self.changestate = function(state,check) {
-	        return db.query('INSERT OR REPLACE INTO mystate (id,lastupdate,lastcheck,version) VALUES (?,?,?,?)',[1,state,check,"1.2.0"])
+	        return db.query('INSERT OR REPLACE INTO mystate (id,lastupdate,lastcheck,version) VALUES (?,?,?,?)',[1,state,check,"1.2.1"])
 	        .then(function(result){
-				console.log('Version 1.2.0 updated to ' + state + 'last check: ' + check);
+				console.log('Version 1.2.1 updated to ' + state + 'last check: ' + check);
 	        });
 	    };
 		
