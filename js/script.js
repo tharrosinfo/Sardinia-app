@@ -1,7 +1,7 @@
 // script.js
 
     // create the module and name it TharrosApp - ,'ngSanitize'
-    var TharrosApp = angular.module('TharrosApp', ['ngRoute','ui.bootstrap','pascalprecht.translate','ngGeolocation','angular-confirm','ngMap'], function($httpProvider) {
+    var TharrosApp = angular.module('TharrosApp', ['ngRoute','ui.bootstrap','pascalprecht.translate','ngGeolocation','ngMap'], function($httpProvider) {
 		  // Use x-www-form-urlencoded Content-Type
 		  $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 
@@ -155,13 +155,13 @@
 	});
 	
 	// create the controller and inject Angular's $scope
-    TharrosApp.controller('mainController', function($geolocation, $rootScope, $scope, $http, $filter, $confirm, $translate, $location, MyItems, myVars, myMap) {
+    TharrosApp.controller('mainController', function($geolocation, $rootScope, $scope, $http, $filter, $translate, $location, MyItems, myVars, myMap) {
 		$rootScope.siteinfo = false;
 		$scope.dataLoaded = false ;
 		$scope.siteCoords = "40.1100,8.9100";
 		myMap.setmap(8,$scope.siteCoords);
 		$translate.use((myVars.lang).split("-")[0]); //(myVars.lang).split("-")[0]
-		MyItems.checkstate($http,$filter,$confirm,$translate,myVars.lang).then(function() {
+		MyItems.checkstate($http,$filter,$translate,myVars.lang).then(function() {
 			$geolocation.getCurrentPosition({
 				timeout: 60000
 			}).then(function(position) {

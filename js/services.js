@@ -168,7 +168,7 @@
 	        });
 	    };
 		
-		self.checkstate = function($http, $filter, $confirm, $translate, lang) {
+		self.checkstate = function($http, $filter, $translate, lang) {
 			console.log("db version checked: "+db.db.version);
 			return db.query('SELECT lastupdate,lastcheck FROM mystate WHERE id=1')
 	        .then(function(result){
@@ -186,7 +186,6 @@
 					curstate = '' ;
 					runupdate = true;
 				}
-				
 				console.log('Will run update: ' + runupdate)
 				// if runupdate else update lastcheck only with current datetime
 				if(runupdate){
@@ -194,37 +193,32 @@
 						method: 'POST',
 						crossDomain: true,
 						dataType: "json",
-						data: { reg: "xN4p!t92Zy", app: 2, state: curstate.lastupdate},
+						data: { reg: "xN4p!t92Zy", app: 2, state: curstate.lastupdate}, 
 						url: 'https://www.tharros.info/checkapp.php'
 					}).then(function successCallback(response) {
 						// this callback will be called asynchronously
 						console.log("success check " + response.data[0].update);
 						// additional response data
 						if (response.data[0].update === 0){
-							// ask user if he wants to update
-							return $translate(['UPDATE_MESSAGE', 'UPDATE_TITLE', 'NOK']).then(function (translations){
-								return $confirm({text: translations.UPDATE_MESSAGE, title: translations.UPDATE_TITLE, ok: 'ok', cancel: translations.NOK}).then(function(){
-									console.log("Confirmed update request");
-									var mydate = new Date();
-									var noCache = mydate.getTime();
-									$http({
-										method: 'POST',
-										crossDomain: true,
-										dataType: "json",
-										data: { reg: "xN4p!t92Zy", lng: lang, cache: noCache},
-										url: 'https://www.tharros.info/sitelist.php'
-									}).then(function successCallback(response) {
-										return self.updatelist(response.data,false).then(function(){
-											// update mystate with current date
-											console.log("success update");
-											state = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
-											console.log("date "+state);
-											return self.changestate(state,state);
-										});
-									},function errorCallback(response) {
-										console.log("failure update");
-									});
-								},function(){console.log("Cancel pressed");});
+							// inform that update is running
+							var mydate = new Date();
+							var noCache = mydate.getTime();
+							$http({
+								method: 'POST',
+								crossDomain: true,
+								dataType: "json",
+								data: { reg: "xN4p!t92Zy", lng: lang, cache: noCache},
+								url: 'https://www.tharros.info/sitelist.php'
+							}).then(function successCallback(response) {
+								return self.updatelist(response.data,false).then(function(){
+									// update mystate with current date
+									console.log("success update");
+									state = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
+									console.log("date "+state);
+									return self.changestate(state,state);
+								});
+							},function errorCallback(response) {
+								console.log("failure update");
 							});
 							
 						}else{
@@ -245,14 +239,15 @@
 		};
 		
 		self.changestate = function(state,check) {
-	        return db.query('INSERT OR REPLACE INTO mystate (id,lastupdate,lastcheck,version) VALUES (?,?,?,?)',[1,state,check,"1.2.1"])
+	        return db.query('INSERT OR REPLACE INTO mystate (id,lastupdate,lastcheck,version) VALUES (?,?,?,?)',[1,state,check,"1.2.2"])
 	        .then(function(result){
-				console.log('Version 1.2.1 updated to ' + state + 'last check: ' + check);
+				console.log('Version 1.2.2 updated to ' + state + 'last check: ' + check);
 	        });
 	    };
 		
 		self.updatelist = function(sites,dbupdatescheme){
 			console.log("Update database scheme: "+dbupdatescheme);
+			l = sites.length;
 			if(dbupdatescheme == true){
 				// add code
 				console.log("db scheme will be updated");
