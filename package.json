@@ -1,0 +1,16 @@
+{
+  "name": "Tharros info Sardegna",
+  "version": "1.2.3",
+  "description": "Discover Sardinia by Tharrosinfo",
+  "main": "index.html",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tharrosinfo/Sardinia-app"
+  },
+  "author": "tharrosinfo",
+  "license": "ISC",
+  "homepage": "https://www.tharros.info"
+}

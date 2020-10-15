@@ -1,0 +1,7 @@
+{
+  "name": "Tharros info Sardegna",
+  "type": "custom",
+  "integrations": {
+    "cordova": {}
+  }
+}
